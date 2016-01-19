@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable =no">
+<title>风险投资</title>
+<link rel="stylesheet" href="css/fav.css"/>
+	<script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="js/tools.js"></script>
+</head>
+<body>
+	<div class="top">
+	  <div class="top_center clearfix">
+	   <div class="top_center_left">
+	     <div class="top_center_left_attention">个人关注</div>
+	     <div class="top_center_left_attention_am">
+	       <select id="state">
+				<option value="在售">在售</option>
+				<option value="存续">存续</option>
+			</select>
+	     </div>
+	   </div>
+	   <div class="top_center_right">
+	   		<div class="top_center_right_attention_am">
+	       <!--select>
+             <option>美美的银行</option>
+             <option>美美的银行</option>
+             <option>美美的银行</option>
+             <option>美美的银行</option>
+             <option>美美的银行</option>
+             <option>美美的银行</option>
+             <option>美美的银行</option>
+             <option>美美的银行</option>
+           </select-->
+	     </div>
+	     <div class="Search"><a href="banksel"><img src="images/yuan.png"></a></div>
+	   </div>
+	  </div>
+		<input type="hidden" id="orderby">
+	  <div class="risk clearfix">
+	     <div class="risk_left">
+	         <div class="risk_left_a1" name="orders" v="yjkhzdnsyl">收益率<img  src="images/sjx.png"></div>
+	         <div class="risk_left_a2" name="orders" v="fxdjms">风险等级<img  src="images/sjx.png"></div>
+	     </div>
+	      <div class="risk_right">
+	         <div class="risk_left_a1" name="orders" v="cpqx">实际天数<img  src="images/sjx.png"></div>
+	         <div class="risk_left_a2" name="orders" v="cpqsrq">起息日<img  src="images/sjx.png"></div>
+	     </div>
+	  </div>
+	  <div class="line">
+	    <div class="line_up">产品名称</div>
+	    <div class="line_list">
+	      <table cellpadding="0" cellspacing="0" >
+	        <tr class="aaa">
+	          <td class="aaaa"></td>
+	          <td class="aaaa"></td>
+	          <td class="bbbb"></td>
+	          <td class="bbbb"></td>
+	        </tr>
+	        <tr class="bb">
+	          <td class="sz">风险等级</td>
+	          <td class="bs">开售日</td>
+	          <td>收益区间</td>
+	          <td class="sz" style="background:#e9f6ec">起息日</td>
+	        </tr>
+	       <tr class="bb">
+	          <td class="sz">起售金额</td>
+	          <td class="bs">终止日</td>
+	          <td>实际天数</td>
+	          <td class="sz" style="background:#e9f6ec">到期日</td>
+	        </tr>
+	      </table>
+	    </div>
+	  </div>
+		<div id="list">
+
+	  
+	</div>
+		</div>
+	<script type="text/html" id="listcell">
+<div class="line">
+	    <div class="line_up">{cpms}</div>
+	    <div class="line_list">
+	      <table cellpadding="0" cellspacing="0" >
+	        <tr class="aaa">
+	          <td class="aaaa"></td>
+	          <td class="aaaa"></td>
+	          <td class="bbbb"></td>
+	          <td class="bbbb"></td>
+	        </tr>
+	        <tr class="bb">
+	          <td class="sz">{fxdjms}</td>
+	          <td class="bs">{mjqsrq}</td>
+	          <td>{yjkhzdnsyl}%-{yjkhzgnsyl}%</td>
+	          <td class="sz" style="background:#e9f6ec">{cpqsrq}</td>
+	        </tr>
+	       <tr class="bb">
+	          <td class="sz">{qdxsje}元</td>
+	          <td class="bs">{mjjsrq}</td>
+	          <td>{cpqx}天</td>
+	          <td class="sz" style="background:#e9f6ec">{cpyjzzrq}</td>
+	        </tr>
+	      </table>
+	    </div>
+	     <div class="particulars">点击详情</div>
+	  </div>
+</script>
+	<script>
+		$('div[name="orders"]').on("click",function(){
+			$('div[name="orders"]').removeClass("risk_selected")
+			$(this).addClass("risk_selected")
+			$("#orderby").val($(this).attr("v"))
+
+			pagenum=0
+			$("#list").html("")
+			loadNextPage()
+		})
+		$("#state").on('change', function (e) {
+			$("#list").html("")
+			pagenum=0
+			loadNextPage()
+		})
+var pagenum=0;
+    function loadNextPage(){
+        $.ajax({
+            url:"/list",
+            type:"POST",
+            dataType:"json",
+            data:{
+                state:$("#state").val(),
+				order:$("#orderby").val(),
+                page:pagenum,
+            },
+            success:function(data){
+                var celltpl=$("#listcell").text()
+                var htmltext=""
+                $.each(data.list,function(k,v){
+                    htmltext+=celltpl.formatO(v)
+                })
+                $("#list").append(htmltext)
+                pagenum+=1
+            },
+            error:function(){
+            },
+            complete:function(){
+                $("#more").prop('disabled', false);
+            }
+        })
+    }
+		loadNextPage()
+</script>
+</body>
+</html>

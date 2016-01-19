@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+    <link href="http://cdn.bootcss.com/meyer-reset/2.0/reset.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/list.css">
+    <script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="js/tools.js"></script>
+</head>
+<body>
+<div class="top topspace">
+    <select id="state">
+        <option value="在售">在售</option>
+        <option value="存续">存续</option>
+    </select>
+</div>
+<div class="topspace"></div>
+<ul class="main" id="mainlist">
+
+</ul>
+<a class="more" id="more">更多</a>
+<script type="text/html" id="listcell">
+    <li>
+        <h5>
+            {cpms}
+            </h5>
+        <div class="code">登记编码:{cpdjbm}</div>
+        <ul class="param"><li>{cpsylxms}</li>
+            <li>{cplxms}</li>
+            <li>风险:{fxdjms}</li>
+            <li>募集期:{mjqsrq} - {mjjsrq}</li>
+            <li>起售金额:{qdxsje}元</li>
+            <li>期限类型:{qxms}</li>
+            <li>实际天数:{cpqx}天</li>
+            <li>存续期:{cpqsrq} - {cpyjzzrq}</li>
+            <li>发行机构:<span>{fxjgms}</span></li>
+        </ul>
+        <div class="profit">
+            <span>预期收益率</span>
+                <span class="bigFont">{yjkhzdnsyl}</span>
+                <span class="smallFont">%</span>
+                <span class="bigFont">-</span>
+                <span class="bigFont">{yjkhzgnsyl}</span>
+                <span class="smallFont">%</span>
+        </div>
+    </li>
+</script>
+<script>
+    var pagenum=0;
+    function loadNextPage(){
+        $.ajax({
+            url:"/list",
+            type:"POST",
+            dataType:"json",
+            data:{
+                state:$("#state").val(),
+                page:pagenum,
+            },
+            success:function(data){
+                var celltpl=$("#listcell").text()
+                var htmltext=""
+                $.each(data.list,function(k,v){
+                    htmltext+=celltpl.formatO(v)
+                })
+                $("#mainlist").append(htmltext)
+                pagenum+=1
+            },
+            error:function(){
+            },
+            complete:function(){
+                $("#more").prop('disabled', false);
+            }
+        })
+    }
+    $("#more").prop('disabled', true);
+    loadNextPage()
+    $("#more").on("click",function(){
+        loadNextPage()
+    })
+    $("#state").on('change', function (e) {
+        $("#mainlist").html("")
+        pagenum=0
+        loadNextPage()
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable =no">
+    <title>关注银行</title>
+    <script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="js/tools.js"></script>
+</head>
+<body>
+<style>
+    body{
+        padding: 0px;
+        margin: 0px;
+    }
+    #list>div{
+        padding: 0.2em;
+        font-size: 2em;
+        border-style: solid;
+        border-width: 0px 0px 1px 0px;
+        border-color: #747474;
+    }
+    #list>div .fav{
+        font-size: 0.4em;
+        color: white;
+        float: right;
+        border-style: solid;
+        border-width: 1px;
+        border-color: #ff0200;
+        background-color: #ff8a00;
+        border-radius: 0.2em;
+        padding: 0.2em;
+    }
+    .foothigh{
+        height: 3em;
+    }
+    .foot{
+        position: fixed;
+        bottom: 0px;
+        background-color: #ff8a00;
+        font-size: 1.5em;
+        line-height: 2em;
+        height: 2em;
+        text-align: center;
+        color: white;
+        width: 100%;
+    }
+</style>
+<div id="list">
+
+</div>
+<div class="foothigh"></div>
+<div class="foot">
+确定
+</div>
+<script type="text/html" id="tpl">
+<div bank>{0}<div dv="{0}" class="fav" style="{1}">已关注</div></div>
+</script>
+<script>
+    var selectedbank={{ selectedbank }}
+    $(function(){
+        $.get("/js/banklist.json",function(data){
+            var tpl=$("#tpl").text()
+            var html=""
+            $.each(data,function(k,v){
+                if($.inArray(v,selectedbank)>-1){
+                    html+=tpl.format(v,"")
+                }else{
+                    html+=tpl.format(v,"display: none")
+                }
+
+            })
+            $("#list").html(html)
+        },"json")
+    })
+    $("#list").on("click","div[bank]",function(){
+        $(this).find(".fav").toggle()
+    })
+    $(".foot").on("click",function(){
+        var favs=[]
+        $.each($(".fav:visible"),function(k,v){
+            favs.push($(v).attr("dv"))
+        })
+        $.post("/banksel",JSON.stringify(favs),function(data){
+            window.location.href="/list"
+        },"json")
+    })
+</script>
+</body>
+</html>
