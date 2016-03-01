@@ -8,6 +8,7 @@ import pypinyin
 import pymongo
 import datetime
 import re
+import time
 
 allcount=0
 client = pymongo.MongoClient('mongodb://localhost:27017/')
@@ -15,6 +16,7 @@ fund = client.test
 lccp=fund.lccp
 lccp.create_index([("cpdjbm",pymongo.ASCENDING)],unique=True)
 
+datalist=[]
 for page in xrange(1,100000):
     while True:
         try:
@@ -39,18 +41,18 @@ for page in xrange(1,100000):
             rescode=crl.getinfo(pycurl.HTTP_CODE)
             if rescode==200:
                 data=json.loads(returnbody.getvalue())
+            allcount+=len(data["List"])
             break
         except:
             print "retry"
+            time.sleep(20)
         finally:
             crl.close()
-
-    allcount+=len(data["List"])
     for one in data["List"]:
-        cpztms=one["cpztms"]
-        cpdjbm=one["cpdjbm"]
-        del one["cpztms"]
-        del one["cpdjbm"]
+        #cpztms=one["cpztms"]
+        #cpdjbm=one["cpdjbm"]
+        #del one["cpztms"]
+        #del one["cpdjbm"]
         one["mjqsrq"]=datetime.datetime.strptime(one["mjqsrq"],"%Y/%m/%d")
         one["mjjsrq"]=datetime.datetime.strptime(one["mjjsrq"],"%Y/%m/%d")
         one["cpqsrq"]=datetime.datetime.strptime(one["cpqsrq"],"%Y/%m/%d")
@@ -66,11 +68,19 @@ for page in xrange(1,100000):
         except:
             pass
         one["bank"]=re.sub(u"(股份|有限公司|（中国）)",u"",one["fxjgms"])
-        lccp.update_one({"cpdjbm":cpdjbm},{"$set":one,"$addToSet":{"cpztms":cpztms}},upsert=True)
+        datalist.append(one)
+        #lccp.update_one({"cpdjbm":cpdjbm},{"$set":one,"$addToSet":{"cpztms":cpztms}},upsert=True)
     print allcount
     if data["Count"]<=allcount:
         break
 
+lccp.remove({})
+for one in datalist:
+    cpztms=one["cpztms"]
+    cpdjbm=one["cpdjbm"]
+    del one["cpztms"]
+    del one["cpdjbm"]
+    lccp.update_one({"cpdjbm":cpdjbm},{"$set":one,"$addToSet":{"cpztms":cpztms}},upsert=True)
 banks=[(one,"".join(pypinyin.lazy_pinyin(one))) for one in lccp.distinct("bank")]
 banks=sorted(banks,key=lambda x:x[1])
 banks=[one[0] for one in banks]

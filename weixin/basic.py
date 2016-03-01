@@ -8,8 +8,8 @@ import time
 
 register_openers()
 
-APPID='wxbeb2934974203a89'
-APPSECRET='41e17a7310df781caa30b7d2f30f6abb'
+APPID='wx86081cc7b38dc18c'
+APPSECRET='43ff395048f88e178d22b652211dfc0f'
 
 ACCESS_TOKEN=None
 JSAPI_TICKET=None
