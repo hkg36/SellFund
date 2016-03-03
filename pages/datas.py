@@ -27,3 +27,17 @@ class Search(object):
             datalist.append(one)
         data={"list":datalist}
         return json.dumps(data,default=json_util,separators=(',', ':'))
+
+class WatchBank(object):
+    def GET(self):
+        userinfo=database.users.find_one({"_id":objectid.ObjectId(database.session.uid)},{"watchbanks":True})
+        selectedbank=[]
+        if userinfo and "watchbanks" in userinfo:
+            selectedbank=userinfo["watchbanks"]
+        return json.dumps(selectedbank)
+    def POST(self):
+        data=web.data()
+        banklist=json.loads(data)
+        database.users.update({"_id":objectid.ObjectId(database.session.uid)},{"$set":{"watchbanks":banklist}})
+        resdata={}
+        return json.dumps(resdata)

@@ -67,4 +67,4 @@ class WeiXinFinishAuth(object):
                 del resdata["unionid"]
             database.users.update({"wx.openid":openid},{"$set":{"wxinfo":resdata}})
 
-            web.seeother("/list")
+            web.seeother("/host")

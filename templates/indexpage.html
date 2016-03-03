@@ -65,7 +65,7 @@
                 </div>
                 <div class="center">关注的银行</div>
                 <div class="right">
-                    <a href="#" class="button">保存</a>
+                    <a href="#" class="button save_button">保存</a>
                 </div>
             </div>
         </div>
@@ -148,7 +148,11 @@
                                 </div>
                                 <a href="#" class="searchbar-cancel">取消</a>
                             </form>
-
+                          <div class="buttons-row">
+                            <a class="button" href="#">按时长</a>
+                            <a class="button" href="#">按收益</a>
+                            <a class="button" href="#">按时间</a>
+                          </div>
                             <div class="resultlist">
 
                             </div>
@@ -337,7 +341,7 @@
     <script type="text/html" id="banklistcell">
         <li>
           <label class="label-checkbox item-content">
-            <input type="checkbox" name="my-checkbox" value="{bankname}" {checked}>
+            <input type="checkbox" name="bankselect" value="{bankname}" {checked}>
             <div class="item-media">
               <i class="icon icon-form-checkbox"></i>
             </div>
@@ -419,17 +423,40 @@
                 });
 
       })
-      app.onPageInit("select_bank",function(page){
+      $$(document).on('pageInit', '.page[data-page="select_bank"]',function(e){
+          var page = e.detail.page
           $$.getJSON("js/banklist.json",function(data){
-              var htmldata=""
-              var tpl=$$("#banklistcell").html()
-              for(var i=0;i<data.length;i++){
-                  htmldata+=tpl.formatO({
-                      bankname:data[i],
-                      checked:""
-                  })
+              $$.getJSON("/datas/watchbank",function(sellist){
+                  var htmldata=""
+                  var tpl=$$("#banklistcell").html()
+                  for(var i=0;i<data.length;i++){
+                      htmldata+=tpl.formatO({
+                          bankname:data[i],
+                          checked:sellist.indexOf(data[i])==-1?"":"checked"
+                      })
+                  }
+                  $$("#bankselectlist").html(htmldata)
+              })
+          })
+          $$(page.navbarInnerContainer).find(".save_button").on("click",function(){
+              var banks=$$("#bankselectlist input[name='bankselect']:checked")
+              var banklist=[]
+              for(var i=0;i<banks.length;i++){
+                 banklist.push($$(banks[i]).val())
               }
-              $$("#bankselectlist").html(htmldata)
+              $$.ajax({
+                    method:"POST",
+                    url:"/datas/watchbank",
+                    dataType:"json",
+                  contentType:"text/json",
+                  processData:false,
+                    data:JSON.stringify(banklist),
+                    success:function(data){
+                    },
+                    complete:function(){
+
+                    }
+                })
           })
       })
       function InitProductDetail (e) {
@@ -459,6 +486,7 @@
         }
       $$(document).on('pageReinit', '.page[data-page="productdetail"]', InitProductDetail )
       $$(document).on('pageInit', '.page[data-page="productdetail"]', InitProductDetail )
+
       app.init()
      /* $$(document).on('pageInit',function (e) {
           var page = e.detail.page;
