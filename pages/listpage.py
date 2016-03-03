@@ -11,11 +11,14 @@ class ListPage(object):
         return tpl.render()
     def POST(self):
         params=web.input(state=u"在售")
-        userinfo=database.users.find_one({"_id":objectid.ObjectId(database.session.uid)},{"watchbanks":True})
-
         findparam={"cpztms":params.state}
-        if userinfo and "watchbanks" in userinfo:
-            findparam["bank"]={"$in":userinfo["watchbanks"]}
+        try:
+            userinfo=database.users.find_one({"_id":objectid.ObjectId(database.session.uid)},{"watchbanks":True})
+
+            if userinfo and "watchbanks" in userinfo:
+                findparam["bank"]={"$in":userinfo["watchbanks"]}
+        except:
+            pass
         alllist=database.lccp.find(findparam,{"_id":False})
         #alllist=database.lccp.find({},{"_id":False})
         if params.has_key("order") and params.order:

@@ -26,13 +26,17 @@ class StaticFile:
 
 import pages.listpage
 import pages.weixinpage
+import pages.indexpage
+import pages.datas
 web.config.debug = False
 path_list=['/list', pages.listpage.ListPage,
+           '/demo',pages.indexpage.DemoPage,
            '/banksel',pages.listpage.BankSelector,
            '/weixin', pages.weixinpage.WeiXinTest,
            '/wxsign',pages.weixinpage.WeiXinSign,
            '/weixinindex',pages.weixinpage.WeiXinFinishAuth,
-           '/wxauthstart',pages.weixinpage.WeiXinStartAuth]
+           '/wxauthstart',pages.weixinpage.WeiXinStartAuth,
+           '/datas/search',pages.datas.Search]
 path_list.extend(("/(js|css|images|style)/(.*)",StaticFile))
 webapp=web.application(path_list, locals())
 database.session = web.session.Session(webapp, MemCacheStore(), initializer={'count': 0})
