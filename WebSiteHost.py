@@ -36,7 +36,10 @@ path_list=[
            '/weixinindex',pages.weixinpage.WeiXinFinishAuth,
            '/wxauthstart',pages.weixinpage.WeiXinStartAuth,
            '/datas/search',pages.datas.Search,
-            '/datas/watchbank',pages.datas.WatchBank]
+            '/datas/watchbank',pages.datas.WatchBank,
+            '/datas/recordbuy',pages.datas.RecordBuy,
+            '/datas/dowatch',pages.datas.DoWatch,
+            '/datas/myinfo',pages.datas.MyInfo]
 path_list.extend(("/(js|css|images|style)/(.*)",StaticFile))
 webapp=web.application(path_list, locals())
 database.session = web.session.Session(webapp, MemCacheStore(), initializer={'count': 0})

@@ -51,5 +51,36 @@ class WatchBank(object):
 class RecordBuy(object):
     def POST(self):
         param=web.input()
-        database.users.update_one({"_id":objectid.ObjectId(database.session.uid)},{"$set":{"myproduct."+param.cpdjbm:float(param.value)}})
+        database.users.update({"_id":objectid.ObjectId(database.session.uid)},{"$set":{"myproduct."+param.cpdjbm:float(param.value)}})
         return json.dumps({})
+
+class DoWatch(object):
+    def GET(self):
+        param=web.input()
+        database.users.update({"_id":objectid.ObjectId(database.session.uid)},{"$addToSet":{"watchproduct":param.cpdjbm}})
+        return json.dumps({})
+
+class MyInfo(object):
+    def GET(self):
+        userinfo=database.users.find_one({"_id":objectid.ObjectId(database.session.uid)},{"_id":0})
+        myproduct=[]
+        myproductls=[]
+        if "myproduct" in userinfo and userinfo["myproduct"]:
+            myproductls=userinfo["myproduct"]
+            del userinfo["myproduct"]
+            myproduct=[key for key in myproductls.iterkeys()]
+
+        products=[]
+        for one in database.lccp.find({"cpdjbm":{"$in":myproduct}},{"_id":0}):
+            one["buy_value"]=myproductls[one["cpdjbm"]]
+            one["mjqsrq"]=one["mjqsrq"].strftime("%Y/%m/%d")
+            one["mjjsrq"]=one["mjjsrq"].strftime("%Y/%m/%d")
+            one["cpqsrq"]=one["cpqsrq"].strftime("%Y/%m/%d")
+            one["cpyjzzrq"]=one["cpyjzzrq"].strftime("%Y/%m/%d")
+            if isinstance(one["yjkhzgnsyl"],float):
+                one["yjkhzgnsyl"]="{0:.2f}".format(one["yjkhzgnsyl"])
+            if isinstance(one["yjkhzdnsyl"],float):
+                one["yjkhzdnsyl"]="{0:.2f}".format(one["yjkhzdnsyl"])
+            products.append(one)
+
+        return json.dumps({"list":products})
