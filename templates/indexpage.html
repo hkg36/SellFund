@@ -55,6 +55,9 @@
                     </a>
                 </div>
                 <div class="center">产品详情</div>
+                <div class="right">
+                    <a href="#" class="link open-popover" data-popover="#addtomyproduct">我已买</a>
+                </div>
             </div>
             <div class="navbar-inner cached" data-page="select_bank">
                 <div class="left">
@@ -88,7 +91,6 @@
               </div>
             </div>
             <div class="page-content">
-                <div class="content-block">
                     <div class="tabs">
                       <div class="tab active" id="tabhome">
                           <div class="mainblock">
@@ -148,10 +150,10 @@
                                 </div>
                                 <a href="#" class="searchbar-cancel">取消</a>
                             </form>
-                          <div class="buttons-row">
-                            <a class="button" href="#">按时长</a>
-                            <a class="button" href="#">按收益</a>
-                            <a class="button" href="#">按时间</a>
+                          <div class="buttons-row" id="ordertype">
+                            <a class="button" href="#" order="cpqx">按时长</a>
+                            <a class="button" href="#" order="-yjkhzgnsyl">按收益</a>
+                            <a class="button" href="#" order="cpyjzzrq">按时间</a>
                           </div>
                             <div class="resultlist">
 
@@ -161,23 +163,19 @@
 
                       </div>
                     </div>
-                </div>
             </div>
           </div>
             <div class="page cached" data-page="productdetail">
                 <div class="page-content">
-                    <div class="content-block">
                         <div class="list-block" style="margin: 0">
                                 <ul class="infodata">
 
                                 </ul>
                          </div>
-                    </div>
                 </div>
             </div>
             <div class="page cached" data-page="mydetail">
                 <div class="page-content">
-                    <div class="content-block">
                         <div class="list-block" style="margin: 0">
                                 <ul>
                                     <li class="item-divider">稳健成长(2005)第15期</li>
@@ -319,25 +317,43 @@
                                         </div>
                                     </li>
                                 </ul>
-                        </div>
                     </div>
                 </div>
             </div>
             <div class="page cached" data-page="select_bank">
                 <div class="page-content">
-                    <div class="content-block">
                         <div class="list-block">
                           <ul id="bankselectlist">
 
                           </ul>
                         </div>
-                    </div>
                 </div>
             </div>
         </div>
 
       </div>
     </div>
+    <div class="popover" id="addtomyproduct">
+        <input type="hidden" datatype="cpdjbm">
+        <div class="popover-angle"></div>
+        <div class="popover-inner">
+              <div class="list-block">
+                  <ul>
+                      <li>
+                          <div class="item-content">
+                            <div class="item-inner">
+                              <div class="item-title label">已购买(元)</div>
+                              <div class="item-input">
+                                <input type="text" placeholder="已购买(元)">
+                              </div>
+                            </div>
+                          </div>
+                      </li>
+                  </ul>
+          </div>
+            <a href="#" class="button button-fill button-raised" style="margin: 1em">确定</a>
+        </div>
+      </div>
     <script type="text/html" id="banklistcell">
         <li>
           <label class="label-checkbox item-content">
@@ -359,7 +375,7 @@
                 <div class="row">
                     <div class="col-50">
                         <div class="line1">起售金额：{qdxsje}元</div>
-                        <div class="line2">{yjkhzgnsyl}</div>
+                        <div class="line2">{yjkhzgnsyl}%</div>
                     </div>
                     <div class="col-50">
                         <div class="line3">实际天数：{cpqx}天</div>
@@ -396,32 +412,42 @@
           init: false,
         });
       app.onPageInit("page_main",function(page){
-          var mySearchbar = app.searchbar('.searchbar', {
-                    customSearch:true,
-                    onSearch:function(s){
-                        $$.ajax({
-                            method:"POST",
-                            url:"/datas/search",
-                            dataType:"json",
-                            data:{text: s.value},
-                            success:function(data){
-                                var tpl=$$("#prodinfocard").html()
-                                var htmlstr=""
-                                var list=data.list
-                                for(var i=0;i<list.length;i++){
-                                    var str=JSON.stringify(list[i]).replace(/[\u007F-\uFFFF]/g, function(chr) {return "\\u" + ("0000" + chr.charCodeAt(0).toString(16)).substr(-4)})
-                                    list[i].linkinfo=btoa(str)
-                                    htmlstr+=tpl.formatO(list[i])
-                                }
-                                $$("#tablist .resultlist").html(htmlstr)
-                            },
-                            complete:function(){
-
-                            }
-                        })
+          var mySearchbar
+          var search_order
+          function goSearch(e){
+              $$.ajax({
+                method:"POST",
+                url:"/datas/search",
+                dataType:"json",
+                data:{text: mySearchbar.input.val(),order:search_order},
+                success:function(data){
+                    var tpl=$$("#prodinfocard").html()
+                    var htmlstr=""
+                    var list=data.list
+                    for(var i=0;i<list.length;i++){
+                        var str=JSON.stringify(list[i]).replace(/[\u007F-\uFFFF]/g, function(chr) {return "\\u" + ("0000" + chr.charCodeAt(0).toString(16)).substr(-4)})
+                        list[i].linkinfo=btoa(str)
+                        htmlstr+=tpl.formatO(list[i])
                     }
-                });
+                    $$("#tablist .resultlist").html(htmlstr)
+                },
+                complete:function(){
 
+                }
+            })
+          }
+          mySearchbar = app.searchbar('.searchbar', {
+                    customSearch:true,
+                    onSearch:goSearch
+                });
+          $$(page.container).find("#ordertype").on("click","a[order]",function(e){
+              var btn=$$(this)
+              btn.prevAll().removeClass("active")
+              btn.nextAll().removeClass("active")
+              btn.addClass("active")
+              search_order=btn.attr("order")
+              goSearch()
+          })
       })
       $$(document).on('pageInit', '.page[data-page="select_bank"]',function(e){
           var page = e.detail.page
@@ -483,24 +509,16 @@
           htmlstr+=tpl.format("产品起始日期",proddata.cpqsrq)
           htmlstr+=tpl.format("产品结束日期",proddata.cpyjzzrq)
           $$(page.container).find(".infodata").html(htmlstr)
+
+          $$("#addtomyproduct [datatype=cpdjbm]").val(proddata.cpdjbm)
         }
-      $$(document).on('pageReinit', '.page[data-page="productdetail"]', InitProductDetail )
-      $$(document).on('pageInit', '.page[data-page="productdetail"]', InitProductDetail )
+      $$(document).on('pageReinit pageInit', '.page[data-page="productdetail"]', InitProductDetail )
 
       app.init()
-     /* $$(document).on('pageInit',function (e) {
-          var page = e.detail.page;
-          if(page.name=="page_main"){
-              $$(page.container).find("#kk").on('click',function(){
-                  alert("okk")
-              })
-              $$(page.container).find(".list-block").on("click","a",function(){
-                  alert(2)
-              })
 
-          }
-        })*/
-
+      $$("#addtomyproduct .button").on("click",function(){
+          alert($$("#addtomyproduct [datatype=cpdjbm]").val())
+      })
         var mainView = app.addView('.view-main', {
           dynamicNavbar: true,
            domCache: true

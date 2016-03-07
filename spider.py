@@ -62,11 +62,11 @@ for page in xrange(1,100000):
         try:
             one["yjkhzgnsyl"]=float(one["yjkhzgnsyl"])
         except:
-            pass
+            one["yjkhzgnsyl"]=0
         try:
             one["yjkhzdnsyl"]=float(one["yjkhzdnsyl"])
         except:
-            pass
+            one["yjkhzdnsyl"]=0
         one["bank"]=re.sub(u"(股份|有限公司|（中国）)",u"",one["fxjgms"])
         datalist.append(one)
         #lccp.update_one({"cpdjbm":cpdjbm},{"$set":one,"$addToSet":{"cpztms":cpztms}},upsert=True)
