@@ -57,7 +57,7 @@
                 </div>
                 <div class="center">产品详情</div>
                 <div class="right">
-                    <a href="#" class="link open-popover" data-popover="#addtomyproduct">我已买</a>
+                    <a href="#" class="link open-popup" data-popup="#addtomyproduct">我已买</a>
                 </div>
             </div>
             <div class="navbar-inner cached" data-page="select_bank">
@@ -146,147 +146,21 @@
             </div>
             <div class="page cached" data-page="mydetail">
                 <div class="page-content">
-                    <div class="list-block" style="margin: 0">
-                        <ul>
-                            <li class="item-divider">稳健成长(2005)第15期</li>
-                            <li class="summary">
-                                <div class="profit">已收益：<span>1024.8</span>元</div>
-                                <div class="day">购买天数：<span>49天</span></div>
-                            </li>
-                            <li class="item-divider">产品明细</li>
-                            <li>
-                                <div class="item-content">
-                                    <div class="item-inner">
-                                        <div class="item-title">
-                                            登记编码:
-                                        </div>
-                                        <div class="item-after">
-                                            datadata
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="item-content">
-                                    <div class="item-inner">
-                                        <div class="item-title">
-                                            发行机构:
-                                        </div>
-                                        <div class="item-after">
-                                            datadata
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="item-content">
-                                    <div class="item-inner">
-                                        <div class="item-title">
-                                            风险等级:
-                                        </div>
-                                        <div class="item-after">
-                                            datadata
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="item-content">
-                                    <div class="item-inner">
-                                        <div class="item-title">
-                                            运作模式:
-                                        </div>
-                                        <div class="item-after">
-                                            datadata
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="item-content">
-                                    <div class="item-inner">
-                                        <div class="item-title">
-                                            起售金额:
-                                        </div>
-                                        <div class="item-after">
-                                            datadata
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="item-content">
-                                    <div class="item-inner">
-                                        <div class="item-title">
-                                            期限类型:
-                                        </div>
-                                        <div class="item-after">
-                                            datadata
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="item-content">
-                                    <div class="item-inner">
-                                        <div class="item-title">
-                                            实际天数:
-                                        </div>
-                                        <div class="item-after">
-                                            datadata
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="item-content">
-                                    <div class="item-inner">
-                                        <div class="item-title">
-                                            募集起始日期:
-                                        </div>
-                                        <div class="item-after">
-                                            datadata
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="item-content">
-                                    <div class="item-inner">
-                                        <div class="item-title">
-                                            募集结束日期:
-                                        </div>
-                                        <div class="item-after">
-                                            datadata
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="item-content">
-                                    <div class="item-inner">
-                                        <div class="item-title">
-                                            产品起始日期:
-                                        </div>
-                                        <div class="item-after">
-                                            datadata
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="item-content">
-                                    <div class="item-inner">
-                                        <div class="item-title">
-                                            产品结束日期:
-                                        </div>
-                                        <div class="item-after">
-                                            datadata
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
+                    <div class="list-block">
+                        <div class="list-group">
+                            <ul>
+                                <li class="item-divider" data="name"></li>
+                                <li class="summary">
+                                    <div class="profit">已收益：<span data="profit">1024.8</span>元</div>
+                                    <div class="day">购买天数：<span data="day">49</span>天</div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="list-group">
+                            <ul data="detail">
+                                <li class="item-divider">产品明细</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -303,10 +177,10 @@
 
     </div>
 </div>
-<div class="popover" id="addtomyproduct">
+<div class="popup" id="addtomyproduct">
     <input type="hidden" datatype="cpdjbm">
-    <div class="popover-angle"></div>
-    <div class="popover-inner">
+    <div class="content-block">
+        <p style="font-size: 1.5em" datatype="cpms"></p>
         <div class="list-block">
             <ul>
                 <li>
@@ -319,9 +193,26 @@
                         </div>
                     </div>
                 </li>
+                <li>
+                    <div class="item-content">
+                        <div class="item-inner">
+                            <div class="item-title label">购买日期</div>
+                            <div class="item-input">
+                                <input type="text" placeholder="购买日期" readonly data-day>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item-content">
+                        <div class="item-inner buttons-row">
+                            <a href="#" class="button button-fill color-green" data-ok>确定</a>
+                            <a href="#" class="close-popup button">取消</a>
+                        </div>
+                    </div>
+                </li>
             </ul>
         </div>
-        <a href="#" class="button button-fill button-raised" style="margin: 1em">确定</a>
     </div>
 </div>
 <script type="text/html" id="banklistcell">

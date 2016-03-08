@@ -24,10 +24,10 @@ class StaticFile:
         except:
             return '' # you can send an 404 error here if you want
 
-import pages.listpage
 import pages.weixinpage
 import pages.indexpage
 import pages.datas
+
 web.config.debug = False
 path_list=[
            '/host',pages.indexpage.Host,
@@ -40,6 +40,11 @@ path_list=[
             '/datas/recordbuy',pages.datas.RecordBuy,
             '/datas/dowatch',pages.datas.DoWatch,
             '/datas/myinfo',pages.datas.MyInfo]
+try:
+    import pages.debugfunc
+    path_list.extend(('/debug/login',pages.debugfunc.Login,))
+except:
+    pass
 path_list.extend(("/(js|css|images|style)/(.*)",StaticFile))
 webapp=web.application(path_list, locals())
 database.session = web.session.Session(webapp, MemCacheStore(), initializer={'count': 0})

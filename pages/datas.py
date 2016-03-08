@@ -51,7 +51,8 @@ class WatchBank(object):
 class RecordBuy(object):
     def POST(self):
         param=web.input()
-        database.users.update({"_id":objectid.ObjectId(database.session.uid)},{"$set":{"myproduct."+param.cpdjbm:float(param.value)}})
+        database.users.update({"_id":objectid.ObjectId(database.session.uid)},
+                              {"$set":{"myproduct."+param.cpdjbm:{"value":float(param.value),"date":datetime.datetime.strptime(param.date,"%Y-%m-%d")}}})
         return json.dumps({})
 
 class DoWatch(object):
@@ -83,4 +84,4 @@ class MyInfo(object):
                 one["yjkhzdnsyl"]="{0:.2f}".format(one["yjkhzdnsyl"])
             products.append(one)
 
-        return json.dumps({"list":products})
+        return DefJsonEncoder.encode({"list":products})

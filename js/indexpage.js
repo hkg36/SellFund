@@ -11,6 +11,25 @@ function packjson(obj){
 function unpackjson(data){
     return JSON.parse(atob(data))
 }
+
+function transDate(proddata){
+    var copy={}
+    copy.mjqsrq=new Date(proddata.mjqsrq)
+    copy.mjjsrq=new Date(proddata.mjjsrq)
+    copy.cpqsrq=new Date(proddata.cpqsrq)
+    copy.cpyjzzrq=new Date(proddata.cpyjzzrq)
+    return copy
+}
+function calcProfit(product){
+    var now=new Date()
+    var dates=transDate(product)
+    var buydate=new Date(product.buy_value.date.replace(/-/g,"/"))
+    var buyvalue=product.buy_value.value
+    var holdspan=Math.floor((now-(buydate-dates.cpqsrq>0?buydate:dates.cpqsrq))/(1000*60*60*24))
+    var cpspan=Math.floor((dates.cpyjzzrq-dates.cpqsrq)/(1000*60*60*24))
+    var aveprofit=(parseFloat(product.yjkhzgnsyl)+parseFloat(product.yjkhzdnsyl))/2
+    return buyvalue
+}
 app.onPageInit("page_main", function (page) {
     var mySearchbar
     var search_order
@@ -64,7 +83,7 @@ app.onPageInit("page_main", function (page) {
         var tpl=$$("#profitinfoline").html()
         var profits=""
         $$.each(products,function(i,v){
-            profits+=tpl.format(packjson(v),v.cpms, v.buy_value)
+            profits+=tpl.format(packjson(v),v.cpms, calcProfit(v))
         })
         $$("#mainpagelist").html('<li class="item-divider" id="profitlist">我的理财收益</li>'+profits)
     })
@@ -105,7 +124,8 @@ $$(document).on('pageInit', '.page[data-page="select_bank"]', function (e) {
         })
     })
 })
-function InitProductDetail(e) {
+
+$$(document).on('pageReinit pageInit', '.page[data-page="productdetail"]', function (e) {
     var page = e.detail.page;
     var proddata = JSON.parse(atob(page.query.info))
     var tpl = $$("#productinfoline").html()
@@ -131,18 +151,54 @@ function InitProductDetail(e) {
     $$(page.container).find(".infodata").html(htmlstr)
 
     $$("#addtomyproduct [datatype=cpdjbm]").val(proddata.cpdjbm)
-}
-$$(document).on('pageReinit pageInit', '.page[data-page="productdetail"]', InitProductDetail)
+    $$("#addtomyproduct [datatype=cpms]").text(proddata.cpms)
+})
+
+$$(document).on('pageReinit pageInit', '.page[data-page="mydetail"]', function(e){
+    var page = e.detail.page;
+    var proddata = unpackjson(page.query.info)
+    var tpl = $$("#productinfoline").html()
+    var htmlstr = '<li class="item-divider">产品明细</li>'
+    htmlstr += tpl.format("登记编码", proddata.cpdjbm)
+    htmlstr += tpl.format("收益类型", proddata.cpsylxms)
+    htmlstr += tpl.format("运作模式", proddata.cplxms)
+    htmlstr += tpl.format("风险等级", proddata.fxdjms)
+    htmlstr += tpl.format("起售金额", proddata.qdxsje + "元")
+    htmlstr += tpl.format("期限类型", proddata.qxms)
+    htmlstr += tpl.format("实际天数", proddata.cpqx + "天")
+    htmlstr += tpl.format("发行机构", proddata.fxjgms)
+    htmlstr += tpl.format("预期最高收益率", proddata.yjkhzgnsyl)
+    htmlstr += tpl.format("预期最低收益率", proddata.yjkhzdnsyl)
+    htmlstr += tpl.format("初始净值", proddata.csjz)
+    htmlstr += tpl.format("本期净值", proddata.bqjz)
+    htmlstr += tpl.format("截止到", proddata.cpyjzzrq)
+    htmlstr += tpl.format("产品净值", proddata.cpjz)
+    htmlstr += tpl.format("募集起始日期", proddata.mjqsrq)
+    htmlstr += tpl.format("募集结束日期", proddata.mjjsrq)
+    htmlstr += tpl.format("产品起始日期", proddata.cpqsrq)
+    htmlstr += tpl.format("产品结束日期", proddata.cpyjzzrq)
+    $$(page.container).find("ul[data='detail']").html(htmlstr)
+    $$(page.container).find("[data=name]").html(proddata.cpms)
+
+    var dates=transDate(proddata)
+})
 
 app.init()
-
-$$("#addtomyproduct .button").on("click", function () {
+$$("#addtomyproduct").on("open",function(){
+    $$(this).find("[data-value]").val("")
+    $$(this).find("[data-day]").val("")
+})
+$$("#addtomyproduct .button[data-ok]").on("click", function () {
     var cpdjbm = $$("#addtomyproduct [datatype=cpdjbm]").val()
     var value = $$("#addtomyproduct [data-value]").val()
-    $$.post("/datas/recordbuy", {cpdjbm: cpdjbm, value: value}, function (data) {
+    var date=$$("#addtomyproduct [data-day]").val()
+    $$.post("/datas/recordbuy", {cpdjbm: cpdjbm, value: value,date:date}, function (data) {
     })
     app.closeModal("#addtomyproduct")
 })
+app.calendar({
+    input: '#addtomyproduct [data-day]',
+});
 var mainView = app.addView('.view-main', {
     dynamicNavbar: true,
     domCache: true
