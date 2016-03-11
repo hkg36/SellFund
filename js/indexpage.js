@@ -1,4 +1,5 @@
 var $$ = Dom7;
+var debugitem
 var app = new Framework7({
     init: false,
 });
@@ -26,9 +27,12 @@ function calcProfit(product){
     var buydate=new Date(product.buy_value.date.replace(/-/g,"/"))
     var buyvalue=product.buy_value.value
     var holdspan=Math.floor((now-(buydate-dates.cpqsrq>0?buydate:dates.cpqsrq))/(1000*60*60*24))
+    if(holdspan<0){
+        return 0
+    }
     var cpspan=Math.floor((dates.cpyjzzrq-dates.cpqsrq)/(1000*60*60*24))
     var aveprofit=(parseFloat(product.yjkhzgnsyl)+parseFloat(product.yjkhzdnsyl))/2
-    return buyvalue
+    return (holdspan/cpspan*aveprofit/100).toFixed(2)
 }
 app.onPageInit("page_main", function (page) {
     var mySearchbar
@@ -45,10 +49,7 @@ app.onPageInit("page_main", function (page) {
                 var htmlstr = ""
                 var list = data.list
                 for (var i = 0; i < list.length; i++) {
-                    var str = JSON.stringify(list[i]).replace(/[\u007F-\uFFFF]/g, function (chr) {
-                        return "\\u" + ("0000" + chr.charCodeAt(0).toString(16)).substr(-4)
-                    })
-                    list[i].linkinfo = btoa(str)
+                    list[i].linkinfo = packjson(list[i])
                     htmlstr += tpl.formatO(list[i])
                 }
                 $$("#tablist .resultlist").html(htmlstr)
@@ -82,10 +83,15 @@ app.onPageInit("page_main", function (page) {
         var products=data.list;
         var tpl=$$("#profitinfoline").html()
         var profits=""
+        var allprofit=0
         $$.each(products,function(i,v){
-            profits+=tpl.format(packjson(v),v.cpms, calcProfit(v))
+            var prf=calcProfit(v)
+            allprofit+=prf
+            profits+=tpl.format(packjson(v),v.cpms, prf)
         })
-        $$("#mainpagelist").html('<li class="item-divider" id="profitlist">我的理财收益</li>'+profits)
+        $$("#mainpagelist").html('<li class="item-divider">我的理财收益</li>'+profits)
+        $$("[data-page=page_main] [data=allprofit]").text(allprofit)
+        $$("[data-page=page_main] [data=productcount]").text(products.length)
     })
 })
 $$(document).on('pageInit', '.page[data-page="select_bank"]', function (e) {
@@ -127,7 +133,7 @@ $$(document).on('pageInit', '.page[data-page="select_bank"]', function (e) {
 
 $$(document).on('pageReinit pageInit', '.page[data-page="productdetail"]', function (e) {
     var page = e.detail.page;
-    var proddata = JSON.parse(atob(page.query.info))
+    var proddata = unpackjson(page.query.info)
     var tpl = $$("#productinfoline").html()
     var htmlstr = '<li class="item-divider">{0}</li>'.format(proddata.cpms)
     htmlstr += tpl.format("登记编码", proddata.cpdjbm)
@@ -180,9 +186,30 @@ $$(document).on('pageReinit pageInit', '.page[data-page="mydetail"]', function(e
     $$(page.container).find("ul[data='detail']").html(htmlstr)
     $$(page.container).find("[data=name]").html(proddata.cpms)
 
-    var dates=transDate(proddata)
+    $$(page.container).find("[data=profit]").text(calcProfit(proddata))
+    $$(page.container).find("[data=day]").text(Math.floor((new Date()-new Date(proddata.buy_value.date.replace(/-/g,"/")))/(1000*60*60*24)))
 })
-
+$$(document).on('pageInit', '.page[data-page="watchproduct"]', function(e){
+    $$('.page[data-page="watchproduct"] .resultlist').on("click","a[act=dounwatch]",function(){
+        var btn=$$(this)
+        var cpdjbm=btn.attr("data")
+        $$.get("/datas/dowatch",{cpdjbm:cpdjbm,remove:1},function(){
+            btn.parents("div.card").eq(0).remove()
+        })
+    })
+})
+$$(document).on('pageInit pageReinit', '.page[data-page="watchproduct"]', function(e){
+    $$.get('/datas/watchprod',function(data){
+        var data=JSON.parse(data)
+        var tpl=$$("#productwatchcell").html()
+        var htmlstr=""
+        $$.each(data.list,function(k,v){
+            v.linkinfo=packjson(v)
+            htmlstr+=tpl.formatO(v)
+        })
+        $$('.page[data-page="watchproduct"] .resultlist').html(htmlstr)
+    })
+})
 app.init()
 $$("#addtomyproduct").on("open",function(){
     $$(this).find("[data-value]").val("")

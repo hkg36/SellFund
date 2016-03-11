@@ -39,7 +39,8 @@ path_list=[
             '/datas/watchbank',pages.datas.WatchBank,
             '/datas/recordbuy',pages.datas.RecordBuy,
             '/datas/dowatch',pages.datas.DoWatch,
-            '/datas/myinfo',pages.datas.MyInfo]
+            '/datas/myinfo',pages.datas.MyInfo,
+            '/datas/watchprod',pages.datas.WatchProduct]
 try:
     import pages.debugfunc
     path_list.extend(('/debug/login',pages.debugfunc.Login,))

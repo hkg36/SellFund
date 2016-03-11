@@ -8,7 +8,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <!-- Your app title -->
-    <title>My App</title>
+    <title>钱搁哪</title>
     <link href="http://cdn.bootcss.com/framework7/1.4.2/css/framework7.ios.colors.min.css" rel="stylesheet">
     <link href="http://cdn.bootcss.com/framework7/1.4.2/css/framework7.ios.min.css" rel="stylesheet">
     <link href="http://cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.css" rel="stylesheet">
@@ -23,7 +23,6 @@
 <!-- Left panel with reveal effect-->
 <div class="panel panel-left panel-reveal">
     <div class="content-block">
-        <p>Left panel content goes here</p>
     </div>
 </div>
 <!-- Views -->
@@ -36,12 +35,12 @@
                 </div>
                 <div class="center sliding">我的收益</div>
                 <div class="right">
-                    <a href="#" class="link">我的关注</a>
+                    <a href="#watchproduct" class="link">我的关注</a>
                 </div>
             </div>
             <div class="navbar-inner cached" data-page="mydetail">
                 <div class="left">
-                    <a href="#page_main" class="link">
+                    <a href="#" class="link back">
                         <i class="icon icon-back"></i>
                         <span>返回</span>
                     </a>
@@ -50,7 +49,7 @@
             </div>
             <div class="navbar-inner cached" data-page="productdetail">
                 <div class="left">
-                    <a href="#page_main" class="link">
+                    <a href="#" class="link back">
                         <i class="icon icon-back"></i>
                         <span>返回</span>
                     </a>
@@ -62,7 +61,7 @@
             </div>
             <div class="navbar-inner cached" data-page="select_bank">
                 <div class="left">
-                    <a href="#page_main" class="link">
+                    <a href="#" class="link back">
                         <i class="icon icon-back"></i>
                         <span>返回</span>
                     </a>
@@ -71,6 +70,15 @@
                 <div class="right">
                     <a href="#" class="button save_button">保存</a>
                 </div>
+            </div>
+            <div class="navbar-inner cached" data-page="watchproduct">
+                <div class="left">
+                    <a href="#" class="link back">
+                        <i class="icon icon-back"></i>
+                        <span>返回</span>
+                    </a>
+                </div>
+                <div class="center">关注的产品</div>
             </div>
         </div>
         <div class="pages navbar-through">
@@ -98,11 +106,11 @@
                                 <div class="small">
                                     截止昨日总收益（元）
                                 </div>
-                                <div class="big">
-                                    3767
+                                <div class="big" data="allprofit">
+                                    0
                                 </div>
                                 <div class="small">
-                                    我的理财产品数：3
+                                    我的理财产品数：<span data="productcount">0</span>
                                 </div>
                             </div>
                             <div class="list-block">
@@ -151,8 +159,8 @@
                             <ul>
                                 <li class="item-divider" data="name"></li>
                                 <li class="summary">
-                                    <div class="profit">已收益：<span data="profit">1024.8</span>元</div>
-                                    <div class="day">购买天数：<span data="day">49</span>天</div>
+                                    <div class="profit">已收益：<span data="profit"></span>元</div>
+                                    <div class="day">购买天数：<span data="day"></span>天</div>
                                 </li>
                             </ul>
                         </div>
@@ -173,8 +181,14 @@
                     </div>
                 </div>
             </div>
-        </div>
+            <div class="page cached" data-page="watchproduct">
+                <div class="page-content">
+                    <div class="resultlist">
 
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <div class="popup" id="addtomyproduct">
@@ -229,7 +243,7 @@
     </li>
 </script>
 <script type="text/html" id="prodinfocard">
-    <div class="card">
+    <div class="card product-card-small">
         <div class="card-header"><a href="#productdetail?info={linkinfo}">{cpms}</a></div>
         <div class="card-content">
             <div class="card-content-inner">
@@ -247,6 +261,28 @@
         </div>
         <div class="card-footer">
             <a href="#" class="button" act="dowatch" data="{cpdjbm}">关注</a>
+        </div>
+    </div>
+</script>
+<script type="text/html" id="productwatchcell">
+    <div class="card product-card-small">
+        <div class="card-header"><a href="#productdetail?info={linkinfo}">{cpms}</a></div>
+        <div class="card-content">
+            <div class="card-content-inner">
+                <div class="row">
+                    <div class="col-50">
+                        <div class="line1">起售金额：{qdxsje}元</div>
+                        <div class="line2">{yjkhzgnsyl}%</div>
+                    </div>
+                    <div class="col-50">
+                        <div class="line3">实际天数：{cpqx}天</div>
+                        <div class="line4">{mjjsrq}起售</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="#" class="button" act="dounwatch" data="{cpdjbm}">取消关注</a>
         </div>
     </div>
 </script>

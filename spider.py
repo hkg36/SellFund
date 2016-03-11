@@ -74,7 +74,7 @@ for page in xrange(1,100000):
     if data["Count"]<=allcount:
         break
 
-lccp.remove({})
+lccp.update_many({},{"$unset":{"cpztms":1}})
 for one in datalist:
     cpztms=one["cpztms"]
     cpdjbm=one["cpdjbm"]
