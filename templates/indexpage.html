@@ -16,16 +16,12 @@
 
 </head>
 <body>
-<!-- Status bar overlay for full screen mode (PhoneGap) -->
 <div class="statusbar-overlay"></div>
-<!-- Panels overlay-->
 <div class="panel-overlay"></div>
-<!-- Left panel with reveal effect-->
 <div class="panel panel-left panel-reveal">
     <div class="content-block">
     </div>
 </div>
-<!-- Views -->
 <div class="views">
     <div class="view view-main">
         <div class="navbar">
@@ -244,7 +240,7 @@
 </script>
 <script type="text/html" id="prodinfocard">
     <div class="card product-card-small">
-        <div class="card-header"><a href="#productdetail?info={linkinfo}">{cpms}</a></div>
+        <div class="card-header">{cpms}</div>
         <div class="card-content">
             <div class="card-content-inner">
                 <div class="row">
@@ -260,6 +256,7 @@
             </div>
         </div>
         <div class="card-footer">
+            <a href="#productdetail?info={linkinfo}" class="button">详细</a>
             <a href="#" class="button" act="dowatch" data="{cpdjbm}">关注</a>
         </div>
     </div>
