@@ -116,10 +116,19 @@ def CreateQRCode(token,scene_id,expire_seconds=None):
     data=json.loads(urllib2.urlopen(request).read())
     ticket=data['ticket']
     return "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=%s"%ticket
+def GetMediaList(type,offset=0,count=100):
+    request = urllib2.Request("https://api.weixin.qq.com/cgi-bin/material/batchget_material?access_token=%s"%(token),json.dumps({
+        "type":type,
+        "offset":offset,
+        "count":count
+    }))
+    data=json.loads(urllib2.urlopen(request).read())
+    return data["item"]
 if __name__ == '__main__' :
     token=GetAccessToken()
     print(token)
-    print(GetJSApiTicket())
+    print GetMediaList("image")
+    #print(GetJSApiTicket())
     #data=PostFile(token,r'D:\desktop\201402120700314c6c8.jpg')
     #print data
     #data=GetFile(token,data)

@@ -27,9 +27,11 @@ class StaticFile:
 import pages.weixinpage
 import pages.indexpage
 import pages.datas
+import pages.weixinserver
 
 web.config.debug = False
 path_list=[
+            '/weixinserver',pages.weixinserver.WeiXin,
            '/host',pages.indexpage.Host,
            '/weixin', pages.weixinpage.WeiXinTest,
            '/wxsign',pages.weixinpage.WeiXinSign,
