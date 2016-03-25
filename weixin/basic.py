@@ -127,7 +127,9 @@ def GetMediaList(type,offset=0,count=100):
 if __name__ == '__main__' :
     token=GetAccessToken()
     print(token)
-    print GetMediaList("image")
+    medias=GetMediaList("image")
+    print len(medias)
+    print json.dumps(medias,ensure_ascii=False,indent=2)
     #print(GetJSApiTicket())
     #data=PostFile(token,r'D:\desktop\201402120700314c6c8.jpg')
     #print data

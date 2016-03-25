@@ -36,7 +36,7 @@ function calcProfit(product){
 }
 app.onPageInit("page_main", function (page) {
     var mySearchbar
-    var search_order
+    var search_order="-yjkhzgnsyl"
 
     function goSearch(e) {
         $$.ajax({
@@ -64,6 +64,7 @@ app.onPageInit("page_main", function (page) {
         customSearch: true,
         onSearch: goSearch
     });
+    goSearch()
     $$(page.container).find("#ordertype").on("click", "a[order]", function (e) {
         var btn = $$(this)
         btn.prevAll().removeClass("active")

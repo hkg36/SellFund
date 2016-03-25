@@ -5,6 +5,8 @@ from lxml import etree
 import web
 import re
 import time
+import base64
+import json
 HOSTNAME='news.wowfantasy.cn'
 
 utf8_parser = etree.XMLParser(encoding='utf-8')
@@ -16,7 +18,6 @@ class WeiXin(object):
         tmpArr.sort()
         s=hashlib.sha1()
         s.update(''.join(tmpArr))
-        print "%s=%s"%(s.hexdigest(),inputs.signature)
         if s.hexdigest()==inputs.signature:
             return inputs.echostr
         return 'some error'
@@ -42,6 +43,7 @@ class WeiXin(object):
         if res is not None:
             res_str=etree.tostring(res,encoding="UTF-8")
             return res_str
+        return ""
     def on_event(self,doc):
         """<Event><![CDATA[EVENT]]></Event>
         <EventKey><![CDATA[EVENTKEY]]></EventKey>"""
@@ -62,16 +64,7 @@ class WeiXin(object):
         elif event=='SCAN':
             return self.On_event_scan(doc)
     def on_menu_ABOUTEVENT(self):
-        new_root=self._buildReplyBase()
-        etree.SubElement(new_root,'MsgType').text=etree.CDATA('news')
-        etree.SubElement(new_root,'ArticleCount').text=str(4)
-        Articles=etree.SubElement(new_root,'Articles')
-        self._add_picture_articles(Articles,u"美女",u'美女1','http://s.doyo.cn/img/52/56/7e7c9e9e78e26a000009.jpg','http://%s'%HOSTNAME)
-        self._add_picture_articles(Articles,u"美女",u'美女2','http://s.doyo.cn/img/52/f5/e2cc9e9e78646700000f.jpg','http://%s'%HOSTNAME)
-        self._add_picture_articles(Articles,u"美女",u'美女3','http://s1.doyo.cn/img/53/01/6f079e9e782a1d000001.jpg','http://%s'%HOSTNAME)
-        self._add_picture_articles(Articles,u"美女",u'美女4','http://s2.doyo.cn/img/52/e0/da939e9e786c7c000005.jpg','http://%s'%HOSTNAME)
-
-        return new_root
+        pass
     def on_menu_WANTJOIN(self):
         new_root=self._buildReplyBase()
         etree.SubElement(new_root,'MsgType').text=etree.CDATA('text')
@@ -104,20 +97,14 @@ class WeiXin(object):
     def On_event_subscribe(self,doc):
         token=weixin.basic.GetAccessToken()
         userdata=weixin.basic.GetUserInfo(token,self.from_user)
-        """with dbconfig.Session() as session:
-            weixin_user=WeixinUser()
-            weixin_user.openid=self.from_user
-            weixin_user.last_recv_time=time.time()
-            weixin_user.subscribe=1
+        """
             weixin_user.province=userdata['province']
             weixin_user.city=userdata['city']
             weixin_user.headimgurl=userdata['headimgurl']
             weixin_user.language=userdata['language']
             weixin_user.country=userdata['country']
             weixin_user.sex=userdata['sex']
-            weixin_user.nickname=userdata['nickname']
-            session.merge(weixin_user)
-            session.commit()"""
+            weixin_user.nickname=userdata['nickname']"""
         scenceid=0
         eventkey=doc.xpath(r"/xml/EventKey/text()",smart_strings=False)
         if eventkey:
@@ -125,10 +112,26 @@ class WeiXin(object):
             if match:
                 scenceid=int(match.group('code'))
                 print(scenceid)
-        new_root=self._buildReplyBase()
-        etree.SubElement(new_root,'MsgType').text=etree.CDATA('text')
-        etree.SubElement(new_root,'Content').text=etree.CDATA(u'%s,感谢您关注钱搁哪,功能开发中,请期待(scenceid=%d)'%(userdata['nickname'],scenceid))
-        return new_root
+
+        articles = []
+        articles.append([
+            u"想发财就跟我来",
+            u"想发财就跟我来",
+            "http://www.weiyangx.com/wp-content/uploads/2014/02/%E7%A4%BE%E4%BC%9A%E5%80%9F%E8%B4%B7-%E4%BC%97%E7%AD%B9%E5%92%8CP2P%E8%B4%B7%E6%AC%BE.jpg",
+            "http://www.baidu.com",
+        ])
+        datafile = open("templates/newprod.json")
+        productdata = json.load(datafile)
+        datafile.close()
+        for one in productdata:
+            articles.append([
+                one["cpms"],
+                one["fxjgms"],
+                "http://www.weiyangx.com/wp-content/uploads/2014/02/%E7%A4%BE%E4%BC%9A%E5%80%9F%E8%B4%B7-%E4%BC%97%E7%AD%B9%E5%92%8CP2P%E8%B4%B7%E6%AC%BE.jpg",
+                "http://news.wowfantasy.cn/host#productdetail?info=" + base64.b64encode(json.dumps(one)),
+                ])
+
+        return self._buildNews(articles)
     def On_event_unsubscribe(self):
         pass
     def _buildReplyBase(self):
@@ -151,12 +154,19 @@ class WeiXin(object):
             etree.SubElement(new_root,'MsgType').text=etree.CDATA('text')
             etree.SubElement(new_root,'Content').text=etree.CDATA(u'%s,用户数据已更新'%(userdata['nickname']))
             return new_root
-    def _add_picture_articles(self,Articles,Title,Description,PicUrl,Url):
-        item=etree.SubElement(Articles,'item')
-        etree.SubElement(item,'Title').text=etree.CDATA(Title)
-        etree.SubElement(item,'Description').text=etree.CDATA(Description)
-        etree.SubElement(item,'PicUrl').text=etree.CDATA(PicUrl)
-        etree.SubElement(item,'Url').text=etree.CDATA(Url)
+
+    def _buildNews(self,newslist):
+        new_root = self._buildReplyBase()
+        etree.SubElement(new_root, 'MsgType').text = etree.CDATA('news')
+        Articles = etree.SubElement(new_root, 'Articles')
+        for new in newslist:
+            item = etree.SubElement(Articles, 'item')
+            etree.SubElement(item, 'Title').text = etree.CDATA(new[0])
+            etree.SubElement(item, 'Description').text = etree.CDATA(new[1])
+            etree.SubElement(item, 'PicUrl').text = etree.CDATA(new[2])
+            etree.SubElement(item, 'Url').text = etree.CDATA(new[3])
+        etree.SubElement(new_root, 'ArticleCount').text = str(len(newslist))#str(len(Articles.getchildren()))
+        return new_root
     def on_location(self,doc):
         lat=float(doc.xpath(r'//xml/Location_X/text()',smart_strings=False)[0])
         long=float(doc.xpath(r'//xml/Location_Y/text()',smart_strings=False)[0])
