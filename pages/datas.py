@@ -97,3 +97,19 @@ class WatchProduct(object):
                 TransDate(one)
                 products.append(one)
         return DefJsonEncoder.encode({"list":products})
+
+class NewsList(object):
+    def GET(self):
+        news=[]
+        for one in database.news.find({},{"content":0}).sort([("time",-1)]).limit(12):
+            one["_id"]=str(one["_id"])
+            one["time"]=one["time"].strftime("%Y-%m-%d %H-%M-%S")
+            news.append(one)
+        return DefJsonEncoder.encode({"news":news})
+class OneNews(object):
+    def GET(self):
+        params=web.input()
+        art=database.news.find_one({"_id":objectid.ObjectId(params.id)},{"brief":0})
+        art["_id"]=str(art["_id"])
+        art["time"] = art["time"].strftime("%Y-%m-%d %H:%M:%S")
+        return DefJsonEncoder.encode(art)

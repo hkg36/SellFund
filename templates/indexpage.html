@@ -76,6 +76,15 @@
                 </div>
                 <div class="center">关注的产品</div>
             </div>
+            <div class="navbar-inner cached" data-page="news">
+                <div class="left">
+                    <a href="#" class="link back">
+                        <i class="icon icon-back"></i>
+                        <span>返回</span>
+                    </a>
+                </div>
+                <div class="center">新闻</div>
+            </div>
         </div>
         <div class="pages navbar-through">
             <div class="page toolbar-fixed" data-page="page_main">
@@ -134,13 +143,7 @@
                         <div class="tab" id="tabcommunity">
                             <div class="list-block">
                                 <ul class="newslist">
-                                    <li>
-                                      <a href="#" class="item-link item-content">
-                                        <div class="item-inner">
-                                          <div class="title"><div>Item title</div><div>Another label</div></div>
-                                        </div>
-                                      </a>
-                                    </li>
+
                                 </ul>
                             </div>
                         </div>
@@ -190,6 +193,13 @@
                     <div class="resultlist">
 
                     </div>
+                </div>
+            </div>
+            <div class="page cached" data-page="news">
+                <div class="page-content">
+                    <h2 class="title"></h2>
+                    <p><span class="author"></span> <span class="time"></span></p>
+                    <div class="content"></div>
                 </div>
             </div>
         </div>
@@ -317,9 +327,19 @@
     </a>
 </li>
 </script>
+<script type="text/html" id="newsline">
+<li>
+  <a href="#news?id={_id}" class="item-link item-content">
+    <div class="item-inner">
+      <div class="title"><div>{title}</div><div>{brief}</div></div>
+    </div>
+  </a>
+</li>
+</script>
 <script src="js/tools.js"></script>
 <script src="http://cdn.bootcss.com/framework7/1.4.2/js/framework7.min.js"></script>
 <script src="http://cdn.bootcss.com/Base64/0.3.0/base64.min.js"></script>
+<script src="http://cdn.bootcss.com/moment.js/2.11.2/moment.min.js"></script>
 <script src="js/indexpage.js"></script>
 </body>
 </html>

@@ -8,6 +8,9 @@ from bson import json_util,objectid
 
 class Editor(object):
     def GET(self):
+        params=web.input()
+        if params.has_key("delete") and params.delete:
+            database.news.delete_one({"_id":objectid.ObjectId(params.delete)})
         articals=database.news.find({},{"content":0}).sort([("time",-1)]).limit(12)
         tpl = jinja2_env.get_template("background/newseditor.html")
         return tpl.render(articals=articals)

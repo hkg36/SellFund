@@ -70,3 +70,14 @@
 #tabcommunity .newslist .item-inner .title>div:first-child{
     font-size: 1.3em;
 }
+[data-page=news] .page-content{
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+[data-page=news] .page-content .author{
+    font-size: 0.8em;
+}
+[data-page=news] .page-content .time{
+    font-size: 0.7em;
+}

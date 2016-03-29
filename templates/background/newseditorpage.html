@@ -7,6 +7,7 @@
     <title>钱搁哪后台</title>
     <link href="http://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <link href="http://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/bootstrap-notify/0.2.0/css/bootstrap-notify.min.css" rel="stylesheet">
     <link href="/css/background/newseditorpage.css" rel="stylesheet">
 </head>
 <body>
@@ -24,9 +25,7 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">新闻</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li class="active"><a href="/background/news">新闻</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
@@ -57,9 +56,10 @@
         <!--a class="btn btn-danger btn-lg" role="button" href="#" id="delete">删除</a-->
     </p>
 </div>
-
+<div class='notifications top-left'></div>
 <script src="http://cdn.bootcss.com/jquery/1.12.0/jquery.min.js"></script>
 <script src="http://cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap-notify/0.2.0/js/bootstrap-notify.min.js"></script>
 <script>
 $("#save").on("click",function () {
     var id=$("#id").val()
@@ -77,6 +77,9 @@ $("#save").on("click",function () {
     },function (data) {
         if(data.res==0){
             $("#id").val(data.id)
+            $('.notifications.top-left').notify({
+                message: { text: title+' 已保存' }
+              }).show();
         }
     },"json")
 })

@@ -64,7 +64,12 @@ app.onPageInit("page_main", function (page) {
         customSearch: true,
         onSearch: goSearch
     });
-    goSearch()
+    $$(page.container).find("#tablist").on("show",function () {
+        if($$(this).prop("inited"))
+            return
+        $$(this).prop("inited","ok")
+        goSearch()
+    })
     $$(page.container).find("#ordertype").on("click", "a[order]", function (e) {
         var btn = $$(this)
         btn.prevAll().removeClass("active")
@@ -102,6 +107,21 @@ app.onPageInit("page_main", function (page) {
         $$("[data-page=page_main] [data=allprofit]").text(allprofit.toFixed(2))
         $$("[data-page=page_main] [data=productcount]").text(products.length)
     })
+    $$(page.container).find("#tabcommunity").on("show",function () {
+        if($$(this).prop("inited"))
+            return
+        $$(this).prop("inited","ok")
+        $$.get('/datas/newslist',function (data) {
+            data=JSON.parse(data)
+            var tpl=$$("#newsline").html()
+            var htmlstr=""
+            $$.each(data.news,function (k,v) {
+                htmlstr+=tpl.formatO(v)
+            })
+            $$("#tabcommunity .newslist").html(htmlstr)
+        })
+    })
+
 })
 $$(document).on('pageInit', '.page[data-page="select_bank"]', function (e) {
     var page = e.detail.page
@@ -217,6 +237,18 @@ $$(document).on('pageInit pageReinit', '.page[data-page="watchproduct"]', functi
             htmlstr+=tpl.formatO(v)
         })
         $$('.page[data-page="watchproduct"] .resultlist').html(htmlstr)
+    })
+})
+$$(document).on('pageInit pageReinit', '.page[data-page="news"]', function(e){
+    var page = e.detail.page;
+    var id=page.query.id
+    $$.get("/datas/onenews?id="+id,function (data) {
+        data=JSON.parse(data)
+        $$(page.container).find(".title").text(data.title)
+        $$(page.container).find(".author").text(data.author)
+        $$(page.container).find(".time").text(moment(data.time).format("YYYY-MM-DD"))
+        debugitem=data.content
+        $$(page.container).find(".content").html(data.content.replace(/(\r\n)|(\n)/ig,"<br/>"))
     })
 })
 app.init()
