@@ -28,11 +28,13 @@ import pages.weixinpage
 import pages.indexpage
 import pages.datas
 import pages.weixinserver
+import pages.BackGround.newsedit
 
 web.config.debug = False
 path_list=[
             '/weixinserver',pages.weixinserver.WeiXin,
            '/host',pages.indexpage.Host,
+            '/guide',pages.indexpage.Guide,
            '/weixin', pages.weixinpage.WeiXinTest,
            '/wxsign',pages.weixinpage.WeiXinSign,
            '/weixinindex',pages.weixinpage.WeiXinFinishAuth,
@@ -42,7 +44,9 @@ path_list=[
             '/datas/recordbuy',pages.datas.RecordBuy,
             '/datas/dowatch',pages.datas.DoWatch,
             '/datas/myinfo',pages.datas.MyInfo,
-            '/datas/watchprod',pages.datas.WatchProduct]
+            '/datas/watchprod',pages.datas.WatchProduct,
+            '/background/news',pages.BackGround.newsedit.Editor,
+            '/background/newseditor',pages.BackGround.newsedit.EditorPage]
 try:
     import pages.debugfunc
     path_list.extend(('/debug/login',pages.debugfunc.Login,))

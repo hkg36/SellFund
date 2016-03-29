@@ -7,3 +7,4 @@ client = pymongo.MongoClient('mongodb://localhost:27017/',connect=False)
 fund = client.test
 lccp=fund.lccp
 users=fund.users
+news=fund.news

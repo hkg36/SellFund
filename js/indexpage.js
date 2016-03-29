@@ -32,7 +32,7 @@ function calcProfit(product){
     }
     var cpspan=Math.floor((dates.cpyjzzrq-dates.cpqsrq)/(1000*60*60*24))
     var aveprofit=(parseFloat(product.yjkhzgnsyl)+parseFloat(product.yjkhzdnsyl))/2
-    return (holdspan/cpspan*aveprofit/100).toFixed(2)
+    return (buyvalue*holdspan/cpspan*aveprofit/100).toFixed(2)
 }
 app.onPageInit("page_main", function (page) {
     var mySearchbar
@@ -84,14 +84,22 @@ app.onPageInit("page_main", function (page) {
         var products=data.list;
         var tpl=$$("#profitinfoline").html()
         var profits=""
+        var profits2=""
         var allprofit=0
+        now=new Date()
         $$.each(products,function(i,v){
+            var date=transDate(v)
+
             var prf=calcProfit(v)
-            allprofit+=prf
-            profits+=tpl.format(packjson(v),v.cpms, prf)
+            allprofit+=parseFloat(prf)
+            var dayrem=(date.cpyjzzrq-now)/(1000*60*60*24)
+            if(dayrem<10)
+                profits2+=tpl.format(packjson(v),v.cpms, prf)
+            else
+                profits+=tpl.format(packjson(v),v.cpms, prf)
         })
-        $$("#mainpagelist").html('<li class="item-divider">我的理财收益</li>'+profits)
-        $$("[data-page=page_main] [data=allprofit]").text(allprofit)
+        $$("#mainpagelist").html('<li class="item-divider">我的理财收益</li>'+profits+'<li class="item-divider">即将到期的理财产品</li>'+profits2)
+        $$("[data-page=page_main] [data=allprofit]").text(allprofit.toFixed(2))
         $$("[data-page=page_main] [data=productcount]").text(products.length)
     })
 })

@@ -1,0 +1,10 @@
+body {
+    padding-bottom: 20px;
+    padding-top: 50px;
+}
+body>.container{
+    padding-top: 10px;
+}
+body>.container>.blank-space{
+    height: 5px;
+}

@@ -66,3 +66,7 @@
     line-height: 3em;
     margin-top: 3px;
 }
+
+#tabcommunity .newslist .item-inner .title>div:first-child{
+    font-size: 1.3em;
+}

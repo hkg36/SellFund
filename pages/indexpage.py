@@ -12,3 +12,8 @@ class Host(object):
             raise web.seeother('/wxauthstart')
         tpl=jinja2_env.get_template("indexpage.html")
         return tpl.render()
+
+class Guide(object):
+    def GET(self):
+        tpl = jinja2_env.get_template("guide.html")
+        return tpl.render()
