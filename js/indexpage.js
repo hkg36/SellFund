@@ -103,7 +103,13 @@ app.onPageInit("page_main", function (page) {
             else
                 profits+=tpl.format(packjson(v),v.cpms, prf)
         })
-        $$("#mainpagelist").html('<li class="item-divider">我的理财收益</li>'+profits+'<li class="item-divider">即将到期的理财产品</li>'+profits2)
+        tpl=$$("#watchinfoline").html()
+        var watchs=""
+        $$.each(data.watch,function (i,v) {
+            watchs=tpl.format(packjson(v),v.cpms,v.fxjgms)
+        })
+        $$("#mainpagelist").html('<li class="item-divider">我的理财收益</li>'+profits+'<li class="item-divider">即将到期的理财产品</li>'+profits2
+        +'<li class="item-divider">我关注的产品</li>'+watchs)
         $$("[data-page=page_main] [data=allprofit]").text(allprofit.toFixed(2))
         $$("[data-page=page_main] [data=productcount]").text(products.length)
     })
@@ -154,7 +160,7 @@ $$(document).on('pageInit', '.page[data-page="select_bank"]', function (e) {
             success: function (data) {
             },
             complete: function () {
-
+                page.view.router.back()
             }
         })
     })
@@ -247,7 +253,6 @@ $$(document).on('pageInit pageReinit', '.page[data-page="news"]', function(e){
         $$(page.container).find(".title").text(data.title)
         $$(page.container).find(".author").text(data.author)
         $$(page.container).find(".time").text(moment(data.time).format("YYYY-MM-DD"))
-        debugitem=data.content
         $$(page.container).find(".content").html(data.content.replace(/(\r\n)|(\n)/ig,"<br/>"))
     })
 })

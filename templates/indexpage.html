@@ -31,7 +31,7 @@
                 </div>
                 <div class="center sliding">我的收益</div>
                 <div class="right">
-                    <a href="#watchproduct" class="link">我的关注</a>
+                    <!--a href="#watchproduct" class="link">我的关注</a-->
                 </div>
             </div>
             <div class="navbar-inner cached" data-page="mydetail">
@@ -319,9 +319,21 @@
 <li>
     <a href="#mydetail?info={0}" class="item-link item-content">
         <div class="item-inner">
-            <div class="item-title">
+            <div >
                 <div class="profityuan">{2}元</div>
                 <div class="profitname">{1}</div>
+            </div>
+        </div>
+    </a>
+</li>
+</script>
+<script type="text/html" id="watchinfoline">
+<li>
+    <a href="#productdetail?info={0}" class="item-link item-content">
+        <div class="item-inner">
+            <div>
+                    <div class="productname">{1}</div>
+                    <div class="productbank">{2}</div>
             </div>
         </div>
     </a>

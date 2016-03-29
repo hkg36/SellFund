@@ -24,12 +24,19 @@
     margin-top: 0.3em;
     margin-bottom: 0.3em;
 }
-.profityuan{
+#mainpagelist .profityuan{
     color: rgba(255, 0, 0, 0.6);
     font-size: 1.2em;
 }
-.profitname{
+#mainpagelist .profitname{
     color: rgba(5, 21, 255, 0.78);
+    font-size: 0.8em;
+}
+#mainpagelist .productname{
+    color: rgba(5, 21, 255, 0.78);
+}
+#mainpagelist .productbank{
+    color: rgba(17, 16, 17, 0.78);
     font-size: 0.8em;
 }
 [data-page=mydetail] .summary{

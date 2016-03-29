@@ -78,13 +78,23 @@ class MyInfo(object):
             del userinfo["myproduct"]
             myproduct=[key for key in myproductls.iterkeys()]
 
+        mywatchproduct=[]
+        if "watchproduct" in userinfo:
+            mywatchproduct=[x for x in userinfo["watchproduct"] if x not in myproduct]
+
         products=[]
         for one in database.lccp.find({"cpdjbm":{"$in":myproduct}},{"_id":0}):
             TransDate(one)
             one["buy_value"]=myproductls[one["cpdjbm"]]
             products.append(one)
 
-        return DefJsonEncoder.encode({"list":products})
+        watchproducts=[]
+        if mywatchproduct:
+            for one in database.lccp.find({"cpdjbm": {"$in": mywatchproduct}}, {"_id": 0}):
+                TransDate(one)
+                watchproducts.append(one)
+
+        return DefJsonEncoder.encode({"list":products,"watch":watchproducts})
 
 class WatchProduct(object):
     def GET(self):
