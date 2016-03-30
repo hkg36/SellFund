@@ -88,6 +88,7 @@ app.onPageInit("page_main", function (page) {
         data=JSON.parse(data)
         var products=data.list;
         var tpl=$$("#profitinfoline").html()
+        var tpl2=$$("#aboutfinishline").html()
         var profits=""
         var profits2=""
         var allprofit=0
@@ -99,7 +100,7 @@ app.onPageInit("page_main", function (page) {
             allprofit+=parseFloat(prf)
             var dayrem=(date.cpyjzzrq-now)/(1000*60*60*24)
             if(dayrem<10)
-                profits2+=tpl.format(packjson(v),v.cpms, prf)
+                profits2+=tpl2.format(packjson(v),v.cpms, prf,(dayrem>0?dayrem:0).toFixed(0))
             else
                 profits+=tpl.format(packjson(v),v.cpms, prf)
         })

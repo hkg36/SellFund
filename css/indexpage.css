@@ -32,6 +32,10 @@
     color: rgba(5, 21, 255, 0.78);
     font-size: 0.8em;
 }
+#mainpagelist .dayleft{
+    color: #ff511d;
+    font-size: 1.1em;
+}
 #mainpagelist .productname{
     color: rgba(5, 21, 255, 0.78);
 }
@@ -75,7 +79,12 @@
 }
 
 #tabcommunity .newslist .item-inner .title>div:first-child{
-    font-size: 1.3em;
+    font-size: 1em;
+    font-weight: bold;
+}
+#tabcommunity .newslist .item-inner .title>div:nth-child(2){
+    font-size: 0.8em;
+    color: rgba(0, 0, 0, 0.67);
 }
 [data-page=news] .page-content{
     padding-left: 1em;
