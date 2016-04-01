@@ -62,7 +62,7 @@ class RecordBuy(object):
 class DoWatch(object):
     def GET(self):
         param=web.input()
-        if "remove" in param:
+        if param.has_key("remove"):
             database.users.update({"_id":objectid.ObjectId(database.session.uid)},{"$pull":{"watchproduct":param.cpdjbm}})
         else:
             database.users.update({"_id":objectid.ObjectId(database.session.uid)},{"$addToSet":{"watchproduct":param.cpdjbm}})
@@ -83,14 +83,14 @@ class MyInfo(object):
             mywatchproduct=[x for x in userinfo["watchproduct"] if x not in myproduct]
 
         products=[]
-        for one in database.lccp.find({"cpdjbm":{"$in":myproduct}},{"_id":0}):
+        for one in database.lccp.find({"cpdjbm":{"$in":myproduct}},{"_id":0}).sort([("yjkhzgnsyl",-1),("cpyjzzrq",1)]):
             TransDate(one)
             one["buy_value"]=myproductls[one["cpdjbm"]]
             products.append(one)
 
         watchproducts=[]
         if mywatchproduct:
-            for one in database.lccp.find({"cpdjbm": {"$in": mywatchproduct}}, {"_id": 0}):
+            for one in database.lccp.find({"cpdjbm": {"$in": mywatchproduct}}, {"_id": 0}).sort([("yjkhzgnsyl",-1),("cpyjzzrq",1)]):
                 TransDate(one)
                 watchproducts.append(one)
 

@@ -80,40 +80,52 @@ app.onPageInit("page_main", function (page) {
     })
     $$(".pages").on("click", "a[act=dowatch]", function () {
         var watchlink = $$(this)
-        $$.get("/datas/dowatch", {cpdjbm: watchlink.attr("data")}, function () {
-            watchlink.addClass("active")
-        })
+        if(watchlink.hasClass("active"))
+            $$.get("/datas/dowatch?remove=1", {cpdjbm: watchlink.attr("data")}, function () {
+                watchlink.removeClass("active")
+            })
+        else
+            $$.get("/datas/dowatch", {cpdjbm: watchlink.attr("data")}, function () {
+                watchlink.addClass("active")
+            })
     })
-    $$.get("/datas/myinfo",function(data){
-        data=JSON.parse(data)
-        var products=data.list;
-        var tpl=$$("#profitinfoline").html()
-        var tpl2=$$("#aboutfinishline").html()
-        var profits=""
-        var profits2=""
-        var allprofit=0
-        now=new Date()
-        $$.each(products,function(i,v){
-            var date=transDate(v)
+    function reflashMyInfo() {
+        $$.get("/datas/myinfo",function(data){
+            data=JSON.parse(data)
+            var products=data.list;
+            var tpl=$$("#profitinfoline").html()
+            var tpl2=$$("#aboutfinishline").html()
+            var profits=""
+            var profits2=""
+            var allprofit=0
+            now=new Date()
+            $$.each(products,function(i,v){
+                var date=transDate(v)
 
-            var prf=calcProfit(v)
-            allprofit+=parseFloat(prf)
-            var dayrem=(date.cpyjzzrq-now)/(1000*60*60*24)
-            if(dayrem<10)
-                profits2+=tpl2.format(packjson(v),v.cpms, prf,(dayrem>0?dayrem:0).toFixed(0))
-            else
-                profits+=tpl.format(packjson(v),v.cpms, prf)
+                var prf=calcProfit(v)
+                allprofit+=parseFloat(prf)
+                var dayrem=(date.cpyjzzrq-now)/(1000*60*60*24)
+                if(dayrem<10)
+                    profits2+=tpl2.format(packjson(v),v.cpms, prf,(dayrem>0?dayrem:0).toFixed(0))
+                else
+                    profits+=tpl.format(packjson(v),v.cpms, prf)
+            })
+            tpl=$$("#watchinfoline").html()
+            var watchs=""
+            $$.each(data.watch,function (i,v) {
+                watchs+=tpl.format(packjson(v),v.cpms,v.fxjgms)
+            })
+            $$("#mainpagelist").html('<li class="item-divider">我的理财收益</li>'+profits+'<li class="item-divider">即将到期的理财产品</li>'+profits2
+            +'<li class="item-divider">我预约的产品</li>'+watchs)
+            $$("[data-page=page_main] [data=allprofit]").text(allprofit.toFixed(2))
+            $$("[data-page=page_main] [data=productcount]").text(products.length)
         })
-        tpl=$$("#watchinfoline").html()
-        var watchs=""
-        $$.each(data.watch,function (i,v) {
-            watchs=tpl.format(packjson(v),v.cpms,v.fxjgms)
-        })
-        $$("#mainpagelist").html('<li class="item-divider">我的理财收益</li>'+profits+'<li class="item-divider">即将到期的理财产品</li>'+profits2
-        +'<li class="item-divider">我关注的产品</li>'+watchs)
-        $$("[data-page=page_main] [data=allprofit]").text(allprofit.toFixed(2))
-        $$("[data-page=page_main] [data=productcount]").text(products.length)
+    }
+    reflashMyInfo()
+    $$(page.container).find("#tabhome .reflashbn").on("click",function () {
+        reflashMyInfo()
     })
+
     $$(page.container).find("#tabcommunity").on("show",function () {
         if($$(this).prop("inited"))
             return
@@ -132,7 +144,8 @@ app.onPageInit("page_main", function (page) {
 })
 $$(document).on('pageInit', '.page[data-page="select_bank"]', function (e) {
     var page = e.detail.page
-    $$.getJSON("js/banklist.json", function (data) {
+    //$$.getJSON("js/banklist.json", function (data) {
+    data=["中国建设银行","中国工商银行","中国农业银行","中国银行","交通银行","招商银行","中国邮政储蓄银行","北京银行","中信银行","光大银行","上海浦东发展银行","广东发展银行","平安银行","中国民生银行","华夏银行","兴业银行","江苏银行","南京银行","浙商银行","杭州银行","宁波银行","上海银行","锦州银行","盛京银行","恒生银行","大连银行","厦门国际银行","农村商业银行"]
         $$.getJSON("/datas/watchbank", function (sellist) {
             var htmldata = ""
             var tpl = $$("#banklistcell").html()
@@ -144,7 +157,7 @@ $$(document).on('pageInit', '.page[data-page="select_bank"]', function (e) {
             }
             $$("#bankselectlist").html(htmldata)
         })
-    })
+    //})
     $$(page.navbarInnerContainer).find(".save_button").on("click", function () {
         var banks = $$("#bankselectlist input[name='bankselect']:checked")
         var banklist = []

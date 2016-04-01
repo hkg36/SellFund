@@ -8,8 +8,8 @@
     background-color: rgba(255, 0, 0, 0.6);
     width: 100%;
     padding: 0.7em 0;
+    position: relative;
 }
-
 #tabhome .mainblock .small{
     color: white;
     width: 100%;
@@ -23,6 +23,16 @@
     text-align: center;
     margin-top: 0.3em;
     margin-bottom: 0.3em;
+}
+
+#tabhome .mainblock .reflashbn{
+    border-color: transparent;
+    color: #ff9f07;
+    position: absolute;
+    right: 3px;
+    bottom: 3px;
+    line-height: 25px;
+    font-size: 25px;
 }
 #mainpagelist .profityuan{
     color: rgba(255, 0, 0, 0.6);
