@@ -56,6 +56,10 @@
 [data-page=mydetail] .summary{
     padding: 0.4em;
 }
+[data-page=mydetail] .base{
+    color: rgb(7, 163, 8);
+    font-size: 1em;
+}
 [data-page=mydetail] .profit{
     color: rgba(255, 0, 0, 0.6);
     font-size: 1.2em;
