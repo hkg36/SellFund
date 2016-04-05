@@ -137,7 +137,9 @@ app.onPageInit("page_main", function (page) {
             $$.each(data.news,function (k,v) {
                 htmlstr+=tpl.formatO(v)
             })
-            $$("#tabcommunity .newslist").html(htmlstr)
+            $$("#tabcommunity .newslist .nline").remove()
+            $$(htmlstr).insertAfter("#tabcommunity .newslist .list-group-title")
+            //$$("#tabcommunity .newslist .list-group-title").append(htmlstr)
         })
     })
 

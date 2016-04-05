@@ -52,6 +52,20 @@
         <textarea class="form-control" rows="20" id="content">{{ art.content }}</textarea>
     </div>
     <p>
+        <div class="dropdown" id="typeselect">
+          <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <span class="selectvalue" value="{{ art.type }}">{{ art.type if art.type else "请选择分类" }}</span>
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href="#">大咖分享</a></li>
+            <li><a href="#">银行荐财</a></li>
+            <li><a href="#">理财体验</a></li>
+          </ul>
+        </div>
+    </p>
+
+    <p>
         <a class="btn btn-primary btn-lg" role="button" href="#" id="save">保存</a>
         <!--a class="btn btn-danger btn-lg" role="button" href="#" id="delete">删除</a-->
     </p>
@@ -60,29 +74,6 @@
 <script src="http://cdn.bootcss.com/jquery/1.12.0/jquery.min.js"></script>
 <script src="http://cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script src="http://cdn.bootcss.com/bootstrap-notify/0.2.0/js/bootstrap-notify.min.js"></script>
-<script>
-$("#save").on("click",function () {
-    var id=$("#id").val()
-    var title=$("#title").val()
-    var brief=$("#brief").val()
-    var author=$("#author").val()
-    var content=$("#content").val()
-
-    $.post("newseditor",{
-        id:id,
-        title:title,
-        brief:brief,
-        author:author,
-        content:content,
-    },function (data) {
-        if(data.res==0){
-            $("#id").val(data.id)
-            $('.notifications.top-left').notify({
-                message: { text: title+' 已保存' }
-              }).show();
-        }
-    },"json")
-})
-</script>
+<script src="/js/background/newseditorpage.js"></script>
 </body>
 </html>

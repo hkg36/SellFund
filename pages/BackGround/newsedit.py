@@ -30,6 +30,7 @@ class EditorPage(object):
             "brief": param.brief,
             "author": param.author,
             "content": param.content,
+            "type":param.type,
             "time":datetime.datetime.now(),
         }
         if len(param.id)==0:
