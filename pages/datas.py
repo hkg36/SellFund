@@ -109,9 +109,13 @@ class WatchProduct(object):
         return DefJsonEncoder.encode({"list":products})
 
 class NewsList(object):
-    def GET(self):
+    def POST(self):
+        param=web.input(type=None)
+        searchparam={}
+        if param.type:
+            searchparam["type"]=param.type
         news=[]
-        for one in database.news.find({},{"content":0}).sort([("time",-1)]).limit(12):
+        for one in database.news.find(searchparam,{"content":0}).sort([("time",-1)]).limit(12):
             one["_id"]=str(one["_id"])
             one["time"]=one["time"].strftime("%Y-%m-%d %H-%M-%S")
             news.append(one)

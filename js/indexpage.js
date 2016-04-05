@@ -126,11 +126,9 @@ app.onPageInit("page_main", function (page) {
         reflashMyInfo()
     })
 
-    $$(page.container).find("#tabcommunity").on("show",function () {
-        if($$(this).prop("inited"))
-            return
-        $$(this).prop("inited","ok")
-        $$.get('/datas/newslist',function (data) {
+    function getNews() {
+        var type=$$(page.container).find("#tabcommunity .typelist a.active").text()
+        $$.post('/datas/newslist',{type:type},function (data) {
             data=JSON.parse(data)
             var tpl=$$("#newsline").html()
             var htmlstr=""
@@ -139,10 +137,20 @@ app.onPageInit("page_main", function (page) {
             })
             $$("#tabcommunity .newslist .nline").remove()
             $$(htmlstr).insertAfter("#tabcommunity .newslist .list-group-title")
-            //$$("#tabcommunity .newslist .list-group-title").append(htmlstr)
         })
+    }
+    $$(page.container).find("#tabcommunity").on("show",function () {
+        if($$(this).prop("inited"))
+            return
+        $$(this).prop("inited","ok")
+        getNews()
     })
-
+    $$(page.container).find("#tabcommunity .typelist").on("click","a:not(.active)",function () {
+        $$(this).nextAll().removeClass("active")
+        $$(this).prevAll().removeClass("active")
+        $$(this).addClass("active")
+        getNews()
+    })
 })
 $$(document).on('pageInit', '.page[data-page="select_bank"]', function (e) {
     var page = e.detail.page
