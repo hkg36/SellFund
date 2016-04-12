@@ -98,14 +98,14 @@ app.onPageInit("page_main", function (page) {
             var profits=""
             var profits2=""
             var allprofit=0
-            now=new Date()
+            var now=new Date()
             $$.each(products,function(i,v){
                 var date=transDate(v)
 
                 var prf=calcProfit(v)
                 allprofit+=parseFloat(prf)
                 var dayrem=(date.cpyjzzrq-now)/(1000*60*60*24)
-                if(dayrem<10)
+                if(dayrem<14)
                     profits2+=tpl2.format(packjson(v),v.cpms, prf,(dayrem>0?dayrem:0).toFixed(0))
                 else
                     profits+=tpl.format(packjson(v),v.cpms, prf)
@@ -247,9 +247,22 @@ $$(document).on('pageReinit pageInit', '.page[data-page="mydetail"]', function(e
     $$(page.container).find("ul[data='detail']").html(htmlstr)
     $$(page.container).find("[data=name]").html(proddata.cpms)
 
+    var now=new Date()
+    var date=transDate(proddata)
+    var dayrem=(date.cpyjzzrq-now)/(1000*60*60*24)
+    if(dayrem<0)
+        dayrem=0
     $$(page.container).find("[data=base]").text(proddata.buy_value.value)
     $$(page.container).find("[data=profit]").text(calcProfit(proddata))
     $$(page.container).find("[data=day]").text(Math.floor((new Date()-new Date(proddata.buy_value.date.replace(/-/g,"/")))/(1000*60*60*24)))
+    $$(page.container).find("[data=dayleft]").text(Math.floor(dayrem))
+    var reservebn=$$(page.container).find("[data=reserve]")
+    if(dayrem<14) {
+        reservebn.show()
+        reservebn.attr("href","#recommendprod?after="+(dayrem==0?now.getTime():date.cpyjzzrq.getTime()))
+    }
+    else
+        reservebn.hide()
 })
 $$(document).on('pageInit', '.page[data-page="watchproduct"]', function(e){
     $$('.page[data-page="watchproduct"] .resultlist').on("click","a[act=dounwatch]",function(){
@@ -281,6 +294,23 @@ $$(document).on('pageInit pageReinit', '.page[data-page="news"]', function(e){
         $$(page.container).find(".author").text(data.author)
         $$(page.container).find(".time").text(moment(data.time).format("YYYY-MM-DD"))
         $$(page.container).find(".content").html(data.content.replace(/(\r\n)|(\n)/ig,"<br/>"))
+    })
+})
+$$(document).on("pageInit pageReinit",".page[data-page=recommendprod]",function (e) {
+    var page = e.detail.page;
+    var after=page.query.after
+    if(after)
+        after=new Date(parseInt(after))
+    $$.post("/datas/recommend",{after:after.toISOString()},function (data) {
+        data=JSON.parse(data)
+        var tpl = $$("#prodinfocard").html()
+        var htmlstr = ""
+        var list = data.list
+        for (var i = 0; i < list.length; i++) {
+            list[i].linkinfo = packjson(list[i])
+            htmlstr += tpl.formatO(list[i])
+        }
+        $$(page.container).find(".page-content").html(htmlstr)
     })
 })
 app.init()

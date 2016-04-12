@@ -4,6 +4,7 @@ import web
 import json
 import database
 import datetime
+import dateutil.parser
 from bson import json_util,objectid
 
 def TransDate(one):
@@ -127,3 +128,16 @@ class OneNews(object):
         art["_id"]=str(art["_id"])
         art["time"] = art["time"].strftime("%Y-%m-%d %H:%M:%S")
         return DefJsonEncoder.encode(art)
+class RecommendProd(object):
+    def POST(self):
+        params=web.input()
+        searchparam={}
+        after=None
+        if params.has_key("after"):
+            after=dateutil.parser.parse(params.after)
+            searchparam["mjjsrq"]={"$gt":after,"$lt":after+datetime.timedelta(days=14)}
+        products=[]
+        for one in database.lccp.find(searchparam, {"_id": 0}).sort("yjkhzgnsyl",-1).limit(30):
+            TransDate(one)
+            products.append(one)
+        return DefJsonEncoder.encode({"list": products})

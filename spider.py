@@ -16,6 +16,11 @@ fund = client.test
 lccp=fund.lccp
 lccp.create_index([("cpdjbm",pymongo.ASCENDING)],unique=True)
 
+lccp.create_index("mjqsrq")
+lccp.create_index("mjjsrq")
+lccp.create_index("cpqsrq")
+lccp.create_index("cpyjzzrq")
+
 datalist=[]
 for page in xrange(1,100000):
     while True:

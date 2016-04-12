@@ -47,6 +47,7 @@ path_list=[
     '/datas/watchprod',pages.datas.WatchProduct,
     '/datas/newslist',pages.datas.NewsList,
     '/datas/onenews',pages.datas.OneNews,
+    "/datas/recommend",pages.datas.RecommendProd,
     '/background/news',pages.BackGround.newsedit.Editor,
     '/background/newseditor',pages.BackGround.newsedit.EditorPage]
 try:

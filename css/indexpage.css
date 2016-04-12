@@ -67,7 +67,10 @@
 [data-page=mydetail] .day{
     font-size: 0.8em;
 }
-
+[data-page=mydetail] .dayleft{
+    font-size: 0.8em;
+    color: #ff1de3;
+}
 .product-card-small .card-header{
     color: rgba(5, 21, 255, 0.78);
     font-size: 1.2em;
