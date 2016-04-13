@@ -215,6 +215,11 @@ $$(document).on('pageReinit pageInit', '.page[data-page="productdetail"]', funct
     htmlstr += tpl.format("募集结束日期", proddata.mjjsrq)
     htmlstr += tpl.format("产品起始日期", proddata.cpqsrq)
     htmlstr += tpl.format("产品结束日期", proddata.cpyjzzrq)
+    htmlstr+='<a href="#bankbranch" class="item-link">'+
+        '<div class="item-content">'+
+        '<div class="item-inner"><div class="item-title">点击查看该银行附近网点</div></div>'+
+        '</div>'+
+        '</a>'
     $$(page.container).find(".infodata").html(htmlstr)
 
     $$("#addtomyproduct [datatype=cpdjbm]").val(proddata.cpdjbm)
@@ -323,8 +328,9 @@ $$("#addtomyproduct .button[data-ok]").on("click", function () {
     var value = $$("#addtomyproduct [data-value]").val()
     var date=$$("#addtomyproduct [data-day]").val()
     $$.post("/datas/recordbuy", {cpdjbm: cpdjbm, value: value,date:date}, function (data) {
+        app.closeModal("#addtomyproduct")
+        app.alert("可前往我的收益页查看收益哦","录入完成")
     })
-    app.closeModal("#addtomyproduct")
 })
 app.calendar({
     input: '#addtomyproduct [data-day]',
