@@ -30,7 +30,7 @@ function calcProfit(product){
     if(holdspan<0){
         return 0
     }
-    var cpspan=Math.floor((dates.cpyjzzrq-dates.cpqsrq)/(1000*60*60*24))
+    var cpspan=360//Math.floor((dates.cpyjzzrq-dates.cpqsrq)/(1000*60*60*24))
     var aveprofit=(parseFloat(product.yjkhzgnsyl)+parseFloat(product.yjkhzdnsyl))/2
     return (buyvalue*holdspan/cpspan*aveprofit/100).toFixed(2)
 }
@@ -77,17 +77,6 @@ app.onPageInit("page_main", function (page) {
         btn.addClass("active")
         search_order = btn.attr("order")
         goSearch()
-    })
-    $$(".pages").on("click", "a[act=dowatch]", function () {
-        var watchlink = $$(this)
-        if(watchlink.hasClass("active"))
-            $$.get("/datas/dowatch?remove=1", {cpdjbm: watchlink.attr("data")}, function () {
-                watchlink.removeClass("active")
-            })
-        else
-            $$.get("/datas/dowatch", {cpdjbm: watchlink.attr("data")}, function () {
-                watchlink.addClass("active")
-            })
     })
     function reflashMyInfo() {
         $$.get("/datas/myinfo",function(data){
@@ -327,9 +316,13 @@ $$("#addtomyproduct .button[data-ok]").on("click", function () {
     var cpdjbm = $$("#addtomyproduct [datatype=cpdjbm]").val()
     var value = $$("#addtomyproduct [data-value]").val()
     var date=$$("#addtomyproduct [data-day]").val()
+
     $$.post("/datas/recordbuy", {cpdjbm: cpdjbm, value: value,date:date}, function (data) {
         app.closeModal("#addtomyproduct")
-        app.alert("可前往我的收益页查看收益哦","录入完成")
+        mainView.router.back()
+        app.alert("可前往我的收益页查看收益哦","录入完成",function () {
+
+        })
     })
 })
 app.calendar({
@@ -339,4 +332,14 @@ var mainView = app.addView('.view-main', {
     dynamicNavbar: true,
     domCache: true
 });
-
+$$(document).on("click", ".product-card-small a[act=dowatch]", function () {
+        var watchlink = $$(this)
+        if(watchlink.hasClass("active"))
+            $$.get("/datas/dowatch?remove=1", {cpdjbm: watchlink.attr("data")}, function () {
+                watchlink.removeClass("active")
+            })
+        else
+            $$.get("/datas/dowatch", {cpdjbm: watchlink.attr("data")}, function () {
+                watchlink.addClass("active")
+            })
+})
