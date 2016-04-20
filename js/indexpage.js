@@ -144,19 +144,28 @@ app.onPageInit("page_main", function (page) {
 $$(document).on('pageInit', '.page[data-page="select_bank"]', function (e) {
     var page = e.detail.page
     //$$.getJSON("js/banklist.json", function (data) {
-    data=["中国建设银行","中国工商银行","中国农业银行","中国银行","交通银行","招商银行","中国邮政储蓄银行","北京银行",
-        "中信银行","光大银行","上海浦东发展银行","广东发展银行","平安银行","中国民生银行","华夏银行","兴业银行","江苏银行",
+    var data=["中国建设银行","中国工商银行","中国农业银行","中国银行","交通银行","招商银行","中国邮政储蓄银行","北京银行",
+        "中信银行","光大银行","上海浦东发展银行","广东发展银行","平安银行","中国民生银行","华夏银行","花旗银行","星展银行","兴业银行","江苏银行",
         "南京银行","浙商银行","杭州银行","宁波银行","上海银行","锦州银行","盛京银行","恒生银行","大连银行","厦门国际银行","北京农村商业银行"]
+    var dataunlocal=["渤海银行","华夏银行","恒丰银行","渣打银行"]
         $$.getJSON("/datas/watchbank", function (sellist) {
             var htmldata = ""
+            var htmldataunl=""
             var tpl = $$("#banklistcell").html()
-            for (var i = 0; i < data.length; i++) {
+            $$.each(data,function (i,one) {
                 htmldata += tpl.formatO({
-                    bankname: data[i],
-                    checked: sellist.indexOf(data[i]) == -1 ? "" : "checked"
+                    bankname: one,
+                    checked: sellist.indexOf(one) == -1 ? "" : "checked"
                 })
-            }
-            $$("#bankselectlist").html(htmldata)
+            })
+            $$.each(dataunlocal,function (i,one) {
+                htmldataunl += tpl.formatO({
+                    bankname: one,
+                    checked: sellist.indexOf(one) == -1 ? "" : "checked"
+                })
+            })
+            $$(htmldata).appendTo("#bankselectlist [type=local]")
+            $$(htmldataunl).appendTo("#bankselectlist [type=nonlocal]")
         })
     //})
     $$(page.navbarInnerContainer).find(".save_button").on("click", function () {
