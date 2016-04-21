@@ -91,7 +91,8 @@ class MyInfo(object):
 
         watchproducts=[]
         if mywatchproduct:
-            for one in database.lccp.find({"cpdjbm": {"$in": mywatchproduct}}, {"_id": 0}).sort([("yjkhzgnsyl",-1),("cpyjzzrq",1)]):
+            for one in database.lccp.find({"$and":[{"cpdjbm": {"$in": mywatchproduct}},{"mjjsrq":{"$gt":datetime.datetime.now()+datetime.timedelta(days=3)}}]},
+                                            {"_id": 0}).sort([("yjkhzgnsyl",-1),("cpyjzzrq",1)]):
                 TransDate(one)
                 watchproducts.append(one)
 
