@@ -18,7 +18,7 @@ $(function() {
         window.location.href='/profitdetail?cpdjbm='+cpdjbm;
     });
     $('.my-select').click(function () {
-        window.location.href='select.html';
+        window.location.href='/myselect';
     });
     
 });

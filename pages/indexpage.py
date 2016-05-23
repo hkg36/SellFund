@@ -61,3 +61,25 @@ class ProfitDetail(object):
             product["dayremain"] = dayremain
         tpl = jinja2_env.get_template("profit-detail.html")
         return tpl.render(product=product,buystate=userinfo["myproduct"][params.cpdjbm],buytime=(now-userinfo["myproduct"][params.cpdjbm]["date"]).days)
+
+class MySelect(object):
+    def GET(self):
+        params=web.input(search=None,order="-yjkhzgnsyl",page=0)
+        findparam = {}
+        if params.search:
+            findparam["cpms"] = {'$regex': ".*%s.*" % params.search}
+        alllist = database.lccp.find(findparam, {"_id": False})
+        if params.order:
+            if params.order[0] == "-":
+                alllist = alllist.sort(((params.order[1:], -1),))
+            else:
+                alllist = alllist.sort(params.order)
+        alllist = alllist.skip(int(params.page) * 20).limit(20)
+        tpl = jinja2_env.get_template("select.html")
+        return tpl.render(alllist=alllist,order=params.order)
+class ProductDetail(object):
+    def GET(self):
+        praram=web.input(cpdjbm=None)
+        product=database.lccp.find_one({"cpdjbm": praram.cpdjbm}, {"_id": 0})
+        tpl = jinja2_env.get_template("product-detail.html")
+        return tpl.render(product=product)

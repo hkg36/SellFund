@@ -1,0 +1,39 @@
+body{
+    font-family: "黑体";
+}
+h3 {
+    height: 50px;
+    line-height: 50px;
+    font-weight: 600;
+    border-bottom: 1px solid #eee;
+}
+.product li {
+    height: 50px;
+    line-height: 50px;
+    border-bottom: 1px solid #eee;
+    margin-left: 10px;
+}
+.return {
+    margin: 10px;
+}
+.return a {
+    text-decoration: none;
+    color: #0078fa;
+    font-weight: 900;
+}
+.return span {
+    margin-left: 30%;
+    font-weight: 900;
+}
+img {
+    float: right;
+    margin-right: 10px;
+}
+.bank {
+    padding: 10px;
+}
+.bank a {
+    text-decoration: none;
+    color: #0078fa;
+    font-weight: 900;
+}

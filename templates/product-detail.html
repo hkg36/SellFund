@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,
+    minimum-scale=1, maximum-scale=1,user-scalable=no">
+    <title>钱搁哪</title>
+    <script src="js/commom.js"></script>
+    <link href="http://cdn.bootcss.com/meyer-reset/2.0/reset.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/product-detail.css">
+</head>
+<body>
+<div class="return">
+    <a href="select.html">&lt;返回</a>
+    <span>产品详情</span>
+</div>
+<h3>{{ product.cpms }}</h3>
+<ul class="product">
+    <li>登记编码：<span>{{ product.cpdjbm }}</span></li>
+        <li>实际天数：<span>{{ product.cpqx }}天</span></li>
+        <li>发行机构：<span>{{ product.fxjgms}}</span></li>
+        <li>预期最高收益率：<span>{{ product.yjkhzgnsyl }}</span></li>
+        <li>预期最低收益率：<span>{{ product.yjkhzdnsyl }}</span></li>
+        <li>产品起始日期：<span>{{ product.cpqsrq.strftime("%Y/%m/%d") }}</span></li>
+        <li>产品结束日期：<span>{{ product.cpyjzzrq.strftime("%Y/%m/%d") }}</span></li>
+</ul>
+<div class="bank">
+    <a href="round-bank.html"><span>点击查看该银行附近网点<img src="img/more.png"></span></a>
+</div>
+
+</body>
+</html>

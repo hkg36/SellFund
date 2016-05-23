@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,
+    minimum-scale=1, maximum-scale=1,user-scalable=no">
+    <title>钱搁哪</title>
+    <script src="js/commom.js"></script>
+    <script src="http://cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
+    <link href="http://cdn.bootcss.com/meyer-reset/2.0/reset.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/select.css">
+</head>
+<body>
+
+<div class="banner">
+    <div class="my-bank">
+        <img src="img/bank.png" alt="我的银行"><br>
+        <span>我的银行</span>
+    </div><div class="my-reserve">
+        <img src="img/reserve.png" alt="我的预约"><br>
+        <span>我的预约</span>
+    </div><div class="my-attention">
+        <img src="img/attention.png" alt="我的关注"><br>
+        <span>我的关注</span>
+    </div>
+
+
+</div>
+
+<input type="text" name="search" placeholder="搜索" id="searchtext">
+
+<div id="tab">
+    <div class="tab-title">
+        <ul>
+            <li {% if order=='-fxdjms' %}class="select"{% endif %} order="-fxdjms">按风险</li>
+            <li {% if order=='-yjkhzgnsyl' %}class="select"{% endif %} order="-yjkhzgnsyl">按收益</li>
+            <li {% if order=='-yjkhzdnsyl' %}class="select"{% endif %} order="-yjkhzdnsyl">按起息</li>
+            <li {% if order=='-cpqx' %}class="select"{% endif %} order="-cpqx">按时间</li>
+        </ul>
+    </div>
+    <div class="tab-content">
+        <div class="show">
+            <ul>
+                {% for one in alllist %}
+                <li>
+                    <p>
+                        {{ one.cpms }}
+                        <a href="/product?cpdjbm={{ one.cpdjbm }}">更多&gt;</a>
+                    </p>
+                    <hr>
+                    <span>起售金额：{{ one.qdxsje }}元</span>
+                    <span>实际天数：{{ one.cpqx }}天</span><br>
+                    <span>收益率：{{ one.yjkhzgnsyl }}%</span><span>{{ one.mjqsrq.strftime("%Y/%m/%d") }}起售</span>
+                    <button>预约</button>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="index"><img src="img/profit.png" alt="图片"><br>我的收益</div><div>
+    <img src="img/select-blue.png" alt="图片"><br>我的选择</div>
+</footer>
+<script>
+    function gosearch() {
+        var search=$("#searchtext").val()
+        var order=$(".tab-title li.select").attr("order")
+        window.location.href="/myselect?search="+search+"&order="+order
+    }
+    $("#searchtext").keyup(function(event){
+        if(event.keyCode == 13){
+            gosearch()
+        }
+    });
+    $(".tab-title").on("click","li",function () {
+        $(this).siblings().removeClass("select")
+        $(this).addClass("select")
+        gosearch()
+    })
+</script>
+</body>
+</html>

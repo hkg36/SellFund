@@ -35,6 +35,8 @@ path_list=[
     '/weixinserver',pages.weixinserver.WeiXin,
     '/host',pages.indexpage.Host,
     '/profitdetail',pages.indexpage.ProfitDetail,
+    '/myselect',pages.indexpage.MySelect,
+    "/product",pages.indexpage.ProductDetail,
     '/weixin', pages.weixinpage.WeiXinTest,
     '/wxsign',pages.weixinpage.WeiXinSign,
     '/weixinindex',pages.weixinpage.WeiXinFinishAuth,
