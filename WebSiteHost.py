@@ -34,28 +34,18 @@ web.config.debug = False
 path_list=[
     '/weixinserver',pages.weixinserver.WeiXin,
     '/host',pages.indexpage.Host,
-    '/guide',pages.indexpage.Guide,
+    '/profitdetail',pages.indexpage.ProfitDetail,
     '/weixin', pages.weixinpage.WeiXinTest,
     '/wxsign',pages.weixinpage.WeiXinSign,
     '/weixinindex',pages.weixinpage.WeiXinFinishAuth,
     '/wxauthstart',pages.weixinpage.WeiXinStartAuth,
-    '/datas/search',pages.datas.Search,
-    '/datas/watchbank',pages.datas.WatchBank,
-    '/datas/recordbuy',pages.datas.RecordBuy,
-    '/datas/dowatch',pages.datas.DoWatch,
-    '/datas/myinfo',pages.datas.MyInfo,
-    '/datas/watchprod',pages.datas.WatchProduct,
-    '/datas/newslist',pages.datas.NewsList,
-    '/datas/onenews',pages.datas.OneNews,
-    "/datas/recommend",pages.datas.RecommendProd,
-    '/background/news',pages.BackGround.newsedit.Editor,
     '/background/newseditor',pages.BackGround.newsedit.EditorPage]
 try:
     import pages.debugfunc
     path_list.extend(('/debug/login',pages.debugfunc.Login,))
 except:
     pass
-path_list.extend(("/(js|css|images|style)/(.*)",StaticFile))
+path_list.extend(("/(js|css|images|img|style)/(.*)",StaticFile))
 webapp=web.application(path_list, locals())
 database.session = web.session.Session(webapp, MemCacheStore(), initializer={'count': 0})
 del path_list

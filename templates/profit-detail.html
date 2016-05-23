@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,
+    minimum-scale=1, maximum-scale=1,user-scalable=no">
+    <title>钱搁哪</title>
+    <script src="js/commom.js"></script>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/profit-detail.css">
+</head>
+<body>
+
+<div class="return">
+    <a href="index.html">&lt;返回</a>
+</div>
+
+<div class="details">
+    <p>{{ product.cpms }}</p>
+    <ul class="buy">
+        <li>已购金额：<span>{{ buystate.value }}元</span></li>
+        <li>已收益：<span>{{ product.profit }}元</span></li>
+        <li>购买天数：<span>{{ buytime }}天</span></li>
+        <li>到期时间：<span>{{ product.dayremain }}天后到期</span></li>
+    </ul>
+    <a href="recommend.html"><button>预约下个高收益产品</button></a>
+</div>
+<div class="product-detail">
+    <p>产品明细</p>
+    <ul class="product">
+        <li>登记编码：<span>{{ product.cpdjbm }}</span></li>
+        <li>实际天数：<span>{{ product.cpqx }}天</span></li>
+        <li>发行机构：<span>{{ product.fxjgms}}</span></li>
+        <li>预期最高收益率：<span>{{ product.yjkhzgnsyl }}</span></li>
+        <li>预期最低收益率：<span>{{ product.yjkhzdnsyl }}</span></li>
+        <li>产品起始日期：<span>{{ product.cpqsrq.strftime("%Y/%m/%d") }}</span></li>
+        <li>产品结束日期：<span>{{ product.cpyjzzrq.strftime("%Y/%m/%d") }}</span></li>
+    </ul>
+</div>
+
+</body>
+</html>

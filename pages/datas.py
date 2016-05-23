@@ -7,6 +7,21 @@ import datetime
 import dateutil.parser
 from bson import json_util,objectid
 
+def calcProfit(product,buy_value):
+    now=datetime.datetime.now();
+    buydate=buy_value["date"]
+    buyvalue=buy_value["value"]
+    if buydate>product["cpqsrq"]:
+        holdspan=now-buydate
+    else:
+        holdspan=now-product["cpqsrq"]
+    if holdspan.days<0:
+        return 0
+    cpspan=360
+    aveprofit=(product["yjkhzgnsyl"]+product["yjkhzdnsyl"])/2
+    return round(buyvalue*holdspan.days/cpspan*aveprofit/100,2)
+
+
 def TransDate(one):
     one["mjqsrq"]=one["mjqsrq"].strftime("%Y/%m/%d")
     one["mjjsrq"]=one["mjjsrq"].strftime("%Y/%m/%d")

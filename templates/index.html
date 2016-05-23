@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,
+    minimum-scale=1, maximum-scale=1,user-scalable=no">
+    <title>钱搁哪</title>
+    <script src="js/commom.js"></script>
+    <script src="http://cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
+    <link href="http://cdn.bootcss.com/meyer-reset/2.0/reset.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="profit">
+    <p>截止昨日总收益（元）</p>
+    <p><img src="img/money.png" alt="">{{ allprofit }}</p>
+    <p>我的理财产品数：{{ products|length }}</p>
+    <!--img src="img/shuaxin.png" alt=""-->
+</div>
+<div id="tab">
+    <div class="tab-title">
+        <ul>
+            <li class="select"><img src="img/shouyi.png" alt="">我的收益</li><li>
+            <div></div><img src="img/tixing.png" alt="">我的提醒</li>
+        </ul>
+    </div>
+
+    <div class="tab-content">
+        <div class="show">
+            <ul>
+                {% for one in  products %}
+                <li cpdjbm="{{ one.cpdjbm }}">
+                    <p>{{ one.profit }}<span>元</span></p>
+                    <p>{{ one.cpms }}</p>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div>
+            <ul class="my-remind">
+                {% for one in reminds %}
+                <li>
+                    <p>{{ one.profit }}<span>元</span>&nbsp;<span class="remind">还有<i class="day">{{ one.dayremain }}</i>天到期</span></p>
+                    <p>{{ one.cpms }}</p>
+                </li>
+                {% endfor %}
+            </ul>
+
+        </div>
+    </div>
+</div>
+<footer>
+    <div><img src="img/profit-blue.png" alt="图片"><br>我的收益</div><div class="my-select">
+    <img src="img/select.png" alt="图片"><br>我的选择</div>
+</footer>
+<script src="js/script.js"></script>
+</body>
+</html>

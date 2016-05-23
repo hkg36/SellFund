@@ -1,0 +1,56 @@
+.return {
+    height: 1.875rem;
+    line-height: 1.875rem;
+    background-color: #eee;
+    padding-left: .625rem;
+    margin-bottom: .625rem;
+}
+.return a {
+    text-decoration: none;
+    color: #0078fa;
+    font-weight: 900;
+}
+
+.details {
+    padding: .625rem;
+}
+.details p {
+    font-size: 1.2rem;
+    font-weight: 900;
+}
+.buy li {
+    margin: .625rem;
+    font-family: "黑体";
+}
+.buy li span {
+    color: #f00;
+    font-weight: 900;
+}
+button {
+    border: none;
+    width: 95%;
+    height: 1.875rem;
+    border-radius: .3125rem;
+    margin-left: .625rem;
+    text-align: center;
+    background-color: #f00;
+    color: #fff;
+    font-weight: 900;
+}
+.product-detail p {
+    background-color: #eee;
+    padding: .625rem;
+    font-size: 1.2rem;
+    font-weight: 900;
+}
+.product li {
+    height: 3.125rem;
+    line-height: 3.125rem;
+    border-bottom: .0625rem solid #eee;
+    margin-left: .625rem;
+    font-weight: 600;
+}
+.product li span {
+    float: right;
+    margin-right: .625rem;
+}
