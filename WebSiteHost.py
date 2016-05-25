@@ -37,6 +37,7 @@ path_list=[
     '/profitdetail',pages.indexpage.ProfitDetail,
     '/myselect',pages.indexpage.MySelect,
     "/product",pages.indexpage.ProductDetail,
+    '/mybank',pages.indexpage.MyBank,
     '/weixin', pages.weixinpage.WeiXinTest,
     '/wxsign',pages.weixinpage.WeiXinSign,
     '/weixinindex',pages.weixinpage.WeiXinFinishAuth,

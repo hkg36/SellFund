@@ -83,3 +83,17 @@ class ProductDetail(object):
         product=database.lccp.find_one({"cpdjbm": praram.cpdjbm}, {"_id": 0})
         tpl = jinja2_env.get_template("product-detail.html")
         return tpl.render(product=product)
+
+class MyBank(object):
+    def GET(self):
+        userinfo = database.users.find_one({"_id": objectid.ObjectId(database.session.uid)}, {"watchbanks": True})
+        selectedbank=[]
+        if userinfo and "watchbanks" in userinfo:
+            selectedbank = userinfo["watchbanks"]
+        tpl = jinja2_env.get_template("my-bank.html")
+        return tpl.render(selectedbank=json.dumps(selectedbank))
+    def POST(self):
+        params=web.input()
+        cb=params.banks
+        cb=json.loads(cb)
+        database.users.update_one({"_id": objectid.ObjectId(database.session.uid)},{"$set":{"watchbanks":cb}})

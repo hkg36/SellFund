@@ -19,8 +19,10 @@
 
 <div class="banner">
     <div class="my-bank">
+        <a href="/mybank">
         <img src="img/bank.png" alt="我的银行"><br>
         <span>我的银行</span>
+        </a>
     </div><div class="my-reserve">
         <img src="img/reserve.png" alt="我的预约"><br>
         <span>我的预约</span>
@@ -40,7 +42,7 @@
             <li {% if order=='-fxdjms' %}class="select"{% endif %} order="-fxdjms">按风险</li>
             <li {% if order=='-yjkhzgnsyl' %}class="select"{% endif %} order="-yjkhzgnsyl">按收益</li>
             <li {% if order=='-yjkhzdnsyl' %}class="select"{% endif %} order="-yjkhzdnsyl">按起息</li>
-            <li {% if order=='-cpqx' %}class="select"{% endif %} order="-cpqx">按时间</li>
+            <li {% if order=='cpqx' %}class="select"{% endif %} order="cpqx">按时间</li>
         </ul>
     </div>
     <div class="tab-content">
@@ -65,7 +67,7 @@
 </div>
 
 <footer>
-    <div class="index"><img src="img/profit.png" alt="图片"><br>我的收益</div><div>
+    <div class="index"><a href="/host"><img src="img/profit.png" alt="图片"><br>我的收益</a></div><div>
     <img src="img/select-blue.png" alt="图片"><br>我的选择</div>
 </footer>
 <script>
