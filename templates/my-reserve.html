@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,
+    minimum-scale=1, maximum-scale=1,user-scalable=no">
+    <title>钱搁哪</title>
+    <script src="js/commom.js"></script>
+    <script src="http://cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
+    <link href="http://cdn.bootcss.com/meyer-reset/2.0/reset.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/my-reserve.css">
+</head>
+<body>
+<div class="return">
+    <a href="javascript:history.back()">&lt;返回</a>
+</div>
+
+
+<div class="my-reserve">
+        <div>
+            <ul>
+                {% for one in products %}
+                <li>
+                    <p>
+                        {{ one.cpms }}
+                        <a href="/product?cpdjbm={{ one.cpdjbm }}">更多&gt;</a>
+                    </p>
+                    <hr>
+                    <span>起售金额：{{ one.qdxsje }}元</span>
+                    <span>实际天数：{{ one.cpqx }}天</span><br>
+                    <span class="percent">{{ one.yjkhzgnsyl }}<i>%</i></span><span>{{ one.mjqsrq.strftime("%Y/%m/%d") }}起售</span>
+                    <a href="/buy?cpdjbm={{ one.cpdjbm }}"><button>我已买</button></a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+</body>
+</html>

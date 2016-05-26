@@ -45,7 +45,7 @@
         <div>
             <ul class="my-remind">
                 {% for one in reminds %}
-                <li>
+                <li cpdjbm="{{ one.cpdjbm }}">
                     <p>{{ one.profit }}<span>元</span>&nbsp;<span class="remind">还有<i class="day">{{ one.dayremain }}</i>天到期</span></p>
                     <p>{{ one.cpms }}</p>
                 </li>

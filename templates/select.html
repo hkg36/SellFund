@@ -24,11 +24,15 @@
         <span>我的银行</span>
         </a>
     </div><div class="my-reserve">
+        <a href="/reserve">
         <img src="img/reserve.png" alt="我的预约"><br>
         <span>我的预约</span>
+        </a>
     </div><div class="my-attention">
+    <a href="/myattention">
         <img src="img/attention.png" alt="我的关注"><br>
         <span>我的关注</span>
+        </a>
     </div>
 
 
@@ -58,7 +62,7 @@
                     <span>起售金额：{{ one.qdxsje }}元</span>
                     <span>实际天数：{{ one.cpqx }}天</span><br>
                     <span>收益率：{{ one.yjkhzgnsyl }}%</span><span>{{ one.mjqsrq.strftime("%Y/%m/%d") }}起售</span>
-                    <button>预约</button>
+                    <button class="reserve" cpdjbm="{{ one.cpdjbm }}">预约</button>
                 </li>
                 {% endfor %}
             </ul>
@@ -85,6 +89,12 @@
         $(this).siblings().removeClass("select")
         $(this).addClass("select")
         gosearch()
+    })
+    $(".show").on("click",".reserve",function () {
+        var cpdjbm=$(this).attr("cpdjbm")
+        $.post("/reserve",{cmd:"add",cpdjbm:cpdjbm},function () {
+            
+        })
     })
 </script>
 </body>

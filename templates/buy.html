@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,
+    minimum-scale=1, maximum-scale=1,user-scalable=no">
+    <title>钱搁哪</title>
+    <script src="js/commom.js"></script>
+    <script src="http://cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
+    <link href="http://cdn.bootcss.com/meyer-reset/2.0/reset.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/buy.css">
+</head>
+<body>
+<div class="return">
+    <a href="javascript:history.back()">&lt;返回</a>
+    <span>我已买</span>
+</div>
+<h3>{{ product.cpms }}</h3>
+<input type="hidden" id="cpdjbm" value="{{ product.cpdjbm }}">
+<ul>
+    <li><label>已购买（元）<input type="text" id="value" placeholder="已购买（元）"></label></li>
+    <li><label>购买日期<input type="text" id="time" placeholder="年-月-日"></label></li>
+    <li>
+        <button id="savebn">确定</button>
+    </li>
+</ul>
+<script>
+    $("#savebn").on("click",function () {
+        var cpdjbm=$("#cpdjbm").val()
+        var value=$("#value").val()
+        var time=$("#time").val()
+        $.post("/buy",{cpdjbm:cpdjbm,value:value,date:time},function () {
+            history.back()
+        })
+    })
+</script>
+</body>
+</html>

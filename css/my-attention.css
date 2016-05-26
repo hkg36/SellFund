@@ -1,0 +1,45 @@
+.return {
+    padding: 10px;
+    background: #eee;
+    margin-bottom: 10px;
+}
+.return a {
+    text-decoration: none;
+    color: #0078fa;
+    font-weight: 900;
+}
+h4 {
+    font-weight: 600;
+    margin-left: 15px;
+}
+ul li{
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 1px solid #eee;
+    margin: 15px;
+}
+ul li i{
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border: 1px solid #999;
+    border-radius: 50%;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+ul li img {
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+    margin-right: 3px;
+}
+.save {
+    margin: 10px;
+    text-align: center;
+}
+.save button {
+    padding: 5px 10px;
+    border: none;
+    background: #0078fa;
+    color: #fff;
+}

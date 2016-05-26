@@ -28,7 +28,7 @@ class Host(object):
                 [("yjkhzgnsyl", -1), ("cpyjzzrq", 1)]):
             one["profit"] = calcProfit(one,myproductls[one["cpdjbm"]])
             allprofit += one["profit"]
-            dayremain=(now-one["cpyjzzrq"]).days
+            dayremain=(one["cpyjzzrq"]-now).days
             if dayremain<14:
                 if dayremain<0:
                     one["dayremain"]=0
@@ -53,7 +53,7 @@ class ProfitDetail(object):
         product=database.lccp.find_one({"cpdjbm": params.cpdjbm}, {"_id": 0})
         product["profit"] = calcProfit(product, userinfo["myproduct"][params.cpdjbm])
         now = datetime.datetime.now()
-        dayremain = (now - product["cpyjzzrq"]).days
+        dayremain = (product["cpyjzzrq"] -now ).days
 
         if dayremain < 0:
             product["dayremain"] = 0
@@ -97,3 +97,48 @@ class MyBank(object):
         cb=params.banks
         cb=json.loads(cb)
         database.users.update_one({"_id": objectid.ObjectId(database.session.uid)},{"$set":{"watchbanks":cb}})
+
+class MyAttention(object):
+    def GET(self):
+        userinfo = database.users.find_one({"_id": objectid.ObjectId(database.session.uid)}, {"attentionbanks": True})
+        selectedbank = []
+        if userinfo and "attentionbanks" in userinfo:
+            selectedbank = userinfo["attentionbanks"]
+        tpl = jinja2_env.get_template("my-attention.html")
+        return tpl.render(selectedbank=json.dumps(selectedbank))
+    def POST(self):
+        params=web.input()
+        cb=params.banks
+        cb = json.loads(cb)
+        database.users.update_one({"_id": objectid.ObjectId(database.session.uid)}, {"$set": {"attentionbanks": cb}})
+
+class MyReserve(object):
+    def GET(self):
+        userinfo = database.users.find_one({"_id": objectid.ObjectId(database.session.uid)}, {"reserve": 1})
+        products=[]
+        if userinfo and "reserve" in userinfo:
+            reserve=userinfo["reserve"]
+            products=database.lccp.find({"$and": [{"cpdjbm": {"$in": reserve}},
+                                         {"mjjsrq": {"$gt": datetime.datetime.now() + datetime.timedelta(days=3)}}]},
+                               {"_id": 0}).sort([("yjkhzgnsyl", -1), ("cpyjzzrq", 1)])
+        tpl = jinja2_env.get_template("my-reserve.html")
+        return tpl.render(products=products)
+    def POST(self):
+        params=web.input()
+        if params.cmd=='add':
+            database.users.update({"_id": objectid.ObjectId(database.session.uid)},
+                                  {"$addToSet": {"reserve": params.cpdjbm}})
+
+class RegBuy(object):
+    def GET(self):
+        params = web.input()
+        product=database.lccp.find_one({"cpdjbm": params.cpdjbm})
+        tpl = jinja2_env.get_template("buy.html")
+        return tpl.render(product=product)
+    def POST(self):
+        param = web.input()
+        database.users.update({"_id": objectid.ObjectId(database.session.uid)},
+                              {"$set": {"myproduct." + param.cpdjbm: {"value": float(param.value),
+                                                                      "date": datetime.datetime.strptime(param.date,
+                                                                                                         "%Y-%m-%d")}}})
+        return json.dumps({})

@@ -1,0 +1,36 @@
+body {
+    font-family: "黑体";
+}
+.return {
+    margin: 10px;
+}
+.return a {
+    text-decoration: none;
+    color: #0078fa;
+    font-weight: 900;
+}
+.return span {
+    margin-left: 30%;
+    font-weight: 900;
+}
+h3 {
+    padding: 5px;
+    margin: 20px 10px;
+    border-bottom: 1px solid #eee;
+    font-weight: 900;
+}
+input {
+    border: none;
+    margin-left: 10px;
+}
+ul li {
+    margin-left: 10px;
+    border-bottom: 1px solid #eee;
+    padding: 5px;
+}
+button {
+    border: none;
+    background-color: #0078fa;
+    color: #fff;
+    padding: 5px 10px;
+}

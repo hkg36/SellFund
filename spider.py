@@ -22,6 +22,7 @@ lccp.create_index("cpqsrq")
 lccp.create_index("cpyjzzrq")
 
 datalist=[]
+nomore=False
 for page in xrange(1,100000):
     while True:
         try:
@@ -33,7 +34,7 @@ for page in xrange(1,100000):
             crl.setopt(crl.POSTFIELDS,urllib.urlencode(
                     {"areacode":"110000",
                      "cpzt":"02,04",
-                     "drawPageToolEnd":"5",
+                     "tzzlxdm":"03",
                      "pagenum":page}))
             crl.setopt(crl.POST, 1)
             crl.setopt(pycurl.CONNECTTIMEOUT, 6)
@@ -47,6 +48,7 @@ for page in xrange(1,100000):
             if rescode==200:
                 data=json.loads(returnbody.getvalue())
             allcount+=len(data["List"])
+            nomore=len(data["List"])==0
             break
         except:
             print "retry"
@@ -55,7 +57,7 @@ for page in xrange(1,100000):
             crl.close()
     datalist.extend(data["List"])
     print allcount
-    if data["Count"]<=allcount:
+    if nomore:
         break
 
 lccp.update_many({},{"$unset":{"cpztms":1}})
