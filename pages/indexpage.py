@@ -142,3 +142,8 @@ class RegBuy(object):
                                                                       "date": datetime.datetime.strptime(param.date,
                                                                                                          "%Y-%m-%d")}}})
         return json.dumps({})
+
+class RoundBank(object):
+    def GET(self):
+        tpl = jinja2_env.get_template("round-bank.html")
+        return tpl.render()

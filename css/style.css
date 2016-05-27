@@ -5,7 +5,7 @@
 body {
     background-color: #f8eef6;
 }
-
+a{text-decoration:none;color:black}
 /*我的收益*/
 .profit {
     position: fixed;
