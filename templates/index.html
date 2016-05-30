@@ -27,7 +27,7 @@
     <div class="tab-title">
         <ul>
             <li class="select"><img src="img/shouyi.png" alt="">我的收益</li><li>
-            <div></div><img src="img/tixing.png" alt="">我的提醒</li>
+            {% if reminds|length >0 %}<div></div>{% endif %}<img src="img/tixing.png" alt="">我的提醒</li>
         </ul>
     </div>
 

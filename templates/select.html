@@ -93,7 +93,7 @@
     $(".show").on("click",".reserve",function () {
         var cpdjbm=$(this).attr("cpdjbm")
         $.post("/reserve",{cmd:"add",cpdjbm:cpdjbm},function () {
-            
+            alert('已预约')
         })
     })
 </script>

@@ -35,19 +35,19 @@ class WeiXinSign(object):
 
 class WeiXinStartAuth(object):
     def GET(self):
-        param=web.input()
+        param=web.input(state='')
         urlparam=urllib.urlencode((
             ("appid",weixin.basic.APPID),
             ("redirect_uri","http://news.wowfantasy.cn/weixinindex"),
             ("response_type","code"),
             ("scope","snsapi_userinfo"),
-            ("state","ssd"),
+            ("state",param.state),
         ))
         web.seeother("https://open.weixin.qq.com/connect/oauth2/authorize?"+urlparam+"#wechat_redirect")
 
 class WeiXinFinishAuth(object):
     def GET(self):
-        param=web.input(code=None)
+        param=web.input(code=None,state=None)
         if param.code:
             res=urllib2.urlopen("https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code"%
                             (weixin.basic.APPID,weixin.basic.APPSECRET,param.code))
@@ -67,4 +67,7 @@ class WeiXinFinishAuth(object):
                 del resdata["unionid"]
             database.users.update({"wx.openid":openid},{"$set":{"wxinfo":resdata}})
 
-            web.seeother("/host")
+            if param.state:
+                web.seeother("/"+param.state)
+            else:
+                web.seeother("/host")

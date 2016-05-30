@@ -23,17 +23,17 @@ menubody={
                 {
                     "type": "view",
                     "name": u"我的银行",
-                    "url": "http://news.wowfantasy.cn/wxauthstart"
+                    "url": "http://news.wowfantasy.cn/wxauthstart?state=mybank"
                 },
                 {
                     "type": "view",
                     "name": u"我的预约",
-                    "url": "http://news.wowfantasy.cn/wxauthstart"
+                    "url": "http://news.wowfantasy.cn/wxauthstart?state=reserve"
                 },
                 {
                     "type": "view",
                     "name": u"我的关注",
-                    "url": "http://news.wowfantasy.cn/wxauthstart"
+                    "url": "http://news.wowfantasy.cn/wxauthstart?state=myattention"
                 },
             ]
         },

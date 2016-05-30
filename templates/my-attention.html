@@ -43,6 +43,7 @@
             checked.push($(this).val())
         })
         $.post("/myattention",{banks:JSON.stringify(checked)},function () {
+            alert('保存成功')
             history.back()
         })
     })
