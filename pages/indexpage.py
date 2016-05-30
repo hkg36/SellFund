@@ -6,6 +6,7 @@ import database
 import datetime
 from bson import json_util,objectid
 from datas import TransDate,calcProfit
+import dateutil
 
 class Host(object):
     def GET(self):
@@ -68,6 +69,9 @@ class MySelect(object):
         findparam = {}
         if params.search:
             findparam["cpms"] = {'$regex': ".*%s.*" % params.search}
+            findparam={"$and":[{"mjjsrq": {"$gt": datetime.datetime.now()}},findparam]}
+        else:
+            findparam = {"mjjsrq": {"$gt": datetime.datetime.now()}}
         alllist = database.lccp.find(findparam, {"_id": False})
         if params.order:
             if params.order[0] == "-":
@@ -119,15 +123,16 @@ class MyReserve(object):
         if userinfo and "reserve" in userinfo:
             reserve=userinfo["reserve"]
             products=database.lccp.find({"$and": [{"cpdjbm": {"$in": reserve}},
-                                         {"mjjsrq": {"$gt": datetime.datetime.now() + datetime.timedelta(days=3)}}]},
+                                         {"mjjsrq": {"$gt": datetime.datetime.now() + datetime.timedelta(days=0)}}]},
                                {"_id": 0}).sort([("yjkhzgnsyl", -1), ("cpyjzzrq", 1)])
         tpl = jinja2_env.get_template("my-reserve.html")
         return tpl.render(products=products)
     def POST(self):
         params=web.input()
         if params.cmd=='add':
-            database.users.update({"_id": objectid.ObjectId(database.session.uid)},
+            res=database.users.update_one({"_id": objectid.ObjectId(database.session.uid)},
                                   {"$addToSet": {"reserve": params.cpdjbm}})
+            print res
 
 class RegBuy(object):
     def GET(self):
@@ -147,3 +152,15 @@ class RoundBank(object):
     def GET(self):
         tpl = jinja2_env.get_template("round-bank.html")
         return tpl.render()
+
+class Recommend(object):
+    def GET(self):
+        params = web.input()
+        searchparam = {}
+        after = None
+        if params.has_key("after"):
+            after = dateutil.parser.parse(params.after)
+            searchparam["mjjsrq"] = {"$gt": after, "$lt": after + datetime.timedelta(days=14)}
+        products=database.lccp.find(searchparam, {"_id": 0}).sort("yjkhzgnsyl", -1).limit(30)
+        tpl = jinja2_env.get_template("recommend.html")
+        return tpl.render(products=products)
