@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,
+    minimum-scale=1, maximum-scale=1,user-scalable=no">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/welcome2.css">
+    <script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body>
+    <img src="img/qian.png" alt="">
+    <h3>请录入您购买的产品信息：</h3>
+    <ul>
+        <li><label><span>产品名称</span><input type="text" id="name"></label></li>
+        <li><label><span>已购买(元)</span><input type="text" id="value"></label></li>
+        <li><label><span>购买日期</span><input type="text" id="time"></label></li>
+    </ul>
+    <button class="continue">录入</button>
+    <a href="?step=3"><button>下一步</button></a>
+<script>
+    $(".continue").on("click",function () {
+        $.post("",{name:$("#name").val(),value:$("#value").val(),time:$("#time").val()},function (res) {
+            alert(res)
+        })
+    })
+</script>
+</body>
+</html>

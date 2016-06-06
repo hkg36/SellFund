@@ -43,6 +43,7 @@ path_list=[
     "/buy",pages.indexpage.RegBuy,
     "/roundbank",pages.indexpage.RoundBank,
     "/recommend",pages.indexpage.Recommend,
+    "/guide",pages.indexpage.Guide,
     '/weixin', pages.weixinpage.WeiXinTest,
     '/wxsign',pages.weixinpage.WeiXinSign,
     '/weixinindex',pages.weixinpage.WeiXinFinishAuth,

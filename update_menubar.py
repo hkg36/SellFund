@@ -42,7 +42,7 @@ menubody={
             "sub_button": [
                 {
                     "type": "view",
-                    "name": u"大咖分享",
+                    "name": u"达人理财",
                     "url": "http://1.qiangena.applinzi.com/dakafenxiang/share.html"
                 },
                 {
@@ -52,17 +52,17 @@ menubody={
                 },
                 {
                     "type": "view",
-                    "name": u"产品预判",
+                    "name": u"产品讲座",
                     "url": "http://1.qiangena.applinzi.com/dakafenxiang/share.html"
                 },
                 {
                     "type": "view",
-                    "name": u"理财体验",
+                    "name": u"理财吐槽",
                     "url": "http://1.qiangena.applinzi.com/dakafenxiang/share.html"
                 },
                 {
                     "type": "view",
-                    "name": u"线下讲座",
+                    "name": u"使用说明",
                     "url": "http://1.qiangena.applinzi.com/dakafenxiang/share.html"
                 },
             ]

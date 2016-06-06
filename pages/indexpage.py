@@ -44,8 +44,28 @@ class Host(object):
 
 class Guide(object):
     def GET(self):
-        tpl = jinja2_env.get_template("guide.html")
+        params = web.input(step=1)
+        step=int(params.step)
+        if step==1:
+            tpl = jinja2_env.get_template("welcome1.html")
+        if step == 2:
+            tpl = jinja2_env.get_template("welcome2.html")
+        if step == 3:
+            tpl = jinja2_env.get_template("welcome3.html")
         return tpl.render()
+    def POST(self):
+        params = web.input()
+        name=params.name
+        value=params.value
+        time=params.time
+        rec=database.lccp.find_one({"cpms":name},{"cpdjbm":1})
+        if rec==None:
+            return u"产品不存在"
+        database.users.update({"_id": objectid.ObjectId(database.session.uid)},
+                              {"$set": {"myproduct." + rec["cpdjbm"]: {"value": float(value),
+                                                                      "date": datetime.datetime.strptime(time,
+                                                                                                         "%Y-%m-%d")}}})
+        return u"成功录入"
 
 class ProfitDetail(object):
     def GET(self):
@@ -72,6 +92,12 @@ class MySelect(object):
             findparam={"$and":[{"mjjsrq": {"$gt": datetime.datetime.now()}},findparam]}
         else:
             findparam = {"mjjsrq": {"$gt": datetime.datetime.now()}}
+
+        userinfo = database.users.find_one({"_id": objectid.ObjectId(database.session.uid)}, {"watchbanks": True})
+        if userinfo and "watchbanks" in userinfo:
+            selectedbank = userinfo["watchbanks"]
+            if selectedbank:
+                findparam["bank"]={"$in":selectedbank}
         alllist = database.lccp.find(findparam, {"_id": False})
         if params.order:
             if params.order[0] == "-":
