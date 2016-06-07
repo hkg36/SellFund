@@ -5,7 +5,9 @@
 body {
     background-color: #f8eef6;
 }
-
+a,button,input {
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
 .return {
     height: 30px;
     line-height: 30px;

@@ -1,6 +1,9 @@
 body {
     font-family: "黑体";
 }
+a,button,input {
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
 .return {
     margin: 10px;
 }

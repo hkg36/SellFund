@@ -1,0 +1,30 @@
+body {
+    font-family: "黑体";
+}
+
+a,button,input {
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+.return {
+    padding: 10px;
+    background: #eee;
+    margin-bottom: 10px;
+}
+.return span {
+    padding-left: 30%;
+    font-weight: 900;
+}
+.return a {
+    text-decoration: none;
+    color: #0078fa;
+    font-weight: 900;
+}
+h3 {
+    font-weight: 900;
+}
+p {
+    padding: 15px;
+    text-align: justify;
+    line-height: 20px;
+    font-size: .9em;
+}

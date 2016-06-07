@@ -55,7 +55,8 @@ class WeiXinFinishAuth(object):
             openid=resdata["openid"]
             access_token=resdata["access_token"]
             resdata["expires"]=time.time()+resdata["expires_in"]
-            database.users.update({"wx.openid":openid},{"$set":{"wx":resdata}},upsert=True)
+            res=database.users.update_one({"wx.openid":openid},{"$set":{"wx":resdata}},upsert=True)
+            isnew=res.upserted_id!=None
 
             info=database.users.find_one({"wx.openid":openid},{"_id":1})
             database.session.uid=str(info["_id"])
@@ -65,9 +66,11 @@ class WeiXinFinishAuth(object):
             del resdata["openid"]
             if "unionid" in resdata:
                 del resdata["unionid"]
-            database.users.update({"wx.openid":openid},{"$set":{"wxinfo":resdata}})
+            database.users.update_one({"wx.openid":openid},{"$set":{"wxinfo":resdata}})
 
-            if param.state:
+            if isnew:
+                web.seeother("/guide")
+            elif param.state:
                 web.seeother("/"+param.state)
             else:
                 web.seeother("/host")

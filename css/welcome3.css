@@ -38,4 +38,5 @@ button {
     background: #f76363;
     border-radius: 5px;
     font-weight: bold;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
 }

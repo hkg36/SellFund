@@ -5,18 +5,25 @@
 body {
     background-color: #f8eef6;
 }
-
+a,button,input {
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+a {
+    list-style: none;
+    color: #000;
+}
 /*banner*/
 .banner {
     width: 100%;
     background-color: #fff;
 }
 .banner div {
-    display: inline-block;
+    float: left;
     width: 33.33%;
     font-weight: 900;
     font-size: .8rem;
     padding: .625rem 8%;
+    list-style: none;
 }
 input {
     background: #fff url("../img/search.png") left center no-repeat;
@@ -27,7 +34,7 @@ input {
     height: 1.875rem;
     border-radius: .3125rem;
 }
-a{text-decoration:none;color:black}
+
 /*tab*/
 #tab {
     margin-bottom: 3.75rem;
@@ -37,7 +44,7 @@ a{text-decoration:none;color:black}
 }
 .tab-title ul li {
     display: inline-block;
-    width: 24%;
+    width: 24.8%;
     height: 1.875rem;
     line-height: 1.875rem;
     background-color: #f3f7f6;
@@ -104,10 +111,10 @@ footer {
     left: 0;
     bottom: 0;
     background-color: #f3f7f6;
+    z-index: 2;
 }
 footer div {
     display: inline-block;
-    font-size: .5rem;
     width: 50%;
     text-align: center;
     color: #999;
@@ -123,7 +130,7 @@ footer div:last-child  {
     color: #0078fa;
 }
 @media screen and (max-width: 320px){
-    .tab-content span {
+    .tab-content span, .tab-content p{
         font-size: .9rem;
     }
 }
