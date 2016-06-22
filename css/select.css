@@ -26,7 +26,7 @@ a {
     list-style: none;
 }
 input {
-    background: #fff url("../img/search.png") left center no-repeat;
+    background: #fff url("../img/search.png") right 10px center no-repeat;
     border: none;
     margin: .625rem;
     padding-left: 1.1rem;
@@ -44,7 +44,7 @@ input {
 }
 .tab-title ul li {
     display: inline-block;
-    width: 24.8%;
+    width: 25%;
     height: 1.875rem;
     line-height: 1.875rem;
     background-color: #f3f7f6;
@@ -115,6 +115,7 @@ footer {
 }
 footer div {
     display: inline-block;
+    font-size: .5rem;
     width: 50%;
     text-align: center;
     color: #999;
