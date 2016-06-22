@@ -43,7 +43,8 @@ input {
     margin: 0 .625rem;
 }
 .tab-title ul li {
-    display: inline-block;
+    float: left;
+    margin-bottom: 10px;
     width: 25%;
     height: 1.875rem;
     line-height: 1.875rem;
