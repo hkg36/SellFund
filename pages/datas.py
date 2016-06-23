@@ -70,10 +70,13 @@ class WatchBank(object):
 
 class RecordBuy(object):
     def POST(self):
-        param=web.input()
+        param=web.input(date=datetime.datetime.now().strftime("%Y-%m-%d"))
+        prod=database.lccp.find_one({"cpdjbm":param.cpdjbm},{"cpms":True})
+        if prod==None:
+            return u"产品不存在"
         database.users.update({"_id":objectid.ObjectId(database.session.uid)},
                               {"$set":{"myproduct."+param.cpdjbm:{"value":float(param.value),"date":datetime.datetime.strptime(param.date,"%Y-%m-%d")}}})
-        return json.dumps({})
+        return u"已登记:"+prod["cpms"]
 
 class DoWatch(object):
     def GET(self):

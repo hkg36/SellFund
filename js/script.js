@@ -17,5 +17,13 @@ $(function() {
         var cpdjbm=$(this).attr("cpdjbm")
         window.location.href='/profitdetail?cpdjbm='+cpdjbm;
     });
+    
+    $('.buyrecord').on("click",function () {
+        var cpdjbm=$(".record .cpdjbm").val()
+        var value=$(".record .value").val()
+        $.post("/data/recordbuy",{cpdjbm:cpdjbm,value:value},function (res) {
+            alert(res)
+        })
+    })
 });
 

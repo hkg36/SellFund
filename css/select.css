@@ -8,14 +8,22 @@ body {
 a,button,input {
     -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
-a {
+li {
     list-style: none;
+}
+a {
+    text-decoration: none;
     color: #000;
 }
 /*banner*/
 .banner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
     width: 100%;
-    background-color: #fff;
+    height: 150px;
+    background-color: #eee;
 }
 .banner div {
     float: left;
@@ -40,7 +48,11 @@ input {
     margin-bottom: 3.75rem;
 }
 .tab-title {
-    margin: 0 .625rem;
+    position: fixed;
+    top: 150px;
+    left: 0;
+    z-index: 2;
+    width: 100%;
 }
 .tab-title ul li {
     float: left;
@@ -51,6 +63,9 @@ input {
     background-color: #f3f7f6;
     text-align: center;
     font-family: "黑体";
+}
+.tab-content {
+    margin-top: 200px;
 }
 .tab-content ul li {
     background-color: #fff;

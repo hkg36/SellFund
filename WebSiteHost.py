@@ -44,6 +44,7 @@ path_list=[
     "/roundbank",pages.indexpage.RoundBank,
     "/recommend",pages.indexpage.Recommend,
     "/guide",pages.indexpage.Guide,
+    "/data/recordbuy",pages.datas.RecordBuy,
     '/weixin', pages.weixinpage.WeiXinTest,
     '/wxsign',pages.weixinpage.WeiXinSign,
     '/weixinindex',pages.weixinpage.WeiXinFinishAuth,
