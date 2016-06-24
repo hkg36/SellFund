@@ -55,17 +55,17 @@ class Guide(object):
         return tpl.render()
     def POST(self):
         params = web.input()
-        name=params.name
+        cpdjbm=params.cpdjbm
         value=params.value
         time=params.time
-        rec=database.lccp.find_one({"cpms":name},{"cpdjbm":1})
+        rec=database.lccp.find_one({"cpdjbm":cpdjbm},{"cpms":True})
         if rec==None:
             return u"产品不存在"
         database.users.update({"_id": objectid.ObjectId(database.session.uid)},
-                              {"$set": {"myproduct." + rec["cpdjbm"]: {"value": float(value),
+                              {"$set": {"myproduct." + cpdjbm: {"value": float(value),
                                                                       "date": datetime.datetime.strptime(time,
                                                                                                          "%Y-%m-%d")}}})
-        return u"成功录入"
+        return u"成功录入:"+rec["cpms"]
 
 class ProfitDetail(object):
     def GET(self):

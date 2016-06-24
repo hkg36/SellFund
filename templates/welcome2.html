@@ -6,26 +6,33 @@
     minimum-scale=1, maximum-scale=1,user-scalable=no">
     <title>Title</title>
     <link rel="stylesheet" href="css/welcome2.css">
-    <script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
+    <script src="js/welcome2.js"></script>
 </head>
 <body>
     <img src="img/qian.png" alt="">
     <h3>请录入您购买的产品信息：</h3>
-    <ul>
-        <li><label><span>产品名称</span><input type="text" id="name"></label></li>
-        <li><label><span>已购买(元)</span><input type="text" id="value"></label></li>
-        <li><label><span>购买日期</span><input type="text" id="time"></label></li>
-    </ul>
-    <button class="continue">录入</button>
-    <a href="?step=3"><button>下一步</button></a>
-<script>
-    $(".continue").on("click",function () {
-        $.post("",{name:$("#name").val(),value:$("#value").val(),time:$("#time").val()},function (res) {
-            alert(res)
-        })
-    })
-    var today = new Date();//获得当前日期
-    $("#time").val(today.getFullYear()+"-"+(today.getMonth() + 1)+"-"+today.getDate())
-</script>
+    <form action="">
+        <label><span>登记编码</span><input id="code" type="text"></label><br>
+        <div id="list">
+            <ul>
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+            </ul>
+        </div>
+        <label><span>购买金额</span><input type="text" id="value"></label>
+    </form>
+
+    <a id="addone" href="#"><button class="continue">继续录入</button></a>
+    <a href="?step=3"><button>完成录入</button></a>
+    <h3>说明</h3>
+    <p>
+        亲爱的用户：首次登录本平台请在下方先录入您己购还没到期产品的信息，
+        为您以后随时在此读取产品收益和提醒产品到期提供方便，该录入不需要提供您本人的任何其它隐私信息。
+        请放心配合，录入和使用。
+    </p>
 </body>
 </html>

@@ -6,23 +6,13 @@
 body {
     background: #0DD1AB;
 }
-h2{
-    text-align: center;
-    margin-top: 10%;
-    color: #fff;
-}
-a,button,input {
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
-}
-
 img {
     width: 200px;
     height: 200px;
-    margin-top: 20%;
+    margin-top: 10%;
     margin-left: 50%;
     transform: translateX(-50%);
 }
-
 h3 {
     padding: 5px;
     margin-top: 10px;
@@ -30,23 +20,33 @@ h3 {
     font-weight: 900;
     text-align: center;
 }
-span {
-    display: inline-block;
-    width: 80px;
+a,button,input {
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+form {
+    position: relative;
+    width: 80%;
+    margin-left: 15%;
 }
 input {
+    width: 150px;
+    height: 20px;
     margin-left: 10px;
     background: #0DD1AB;
     padding: 5px;
     border: 1px solid #79B354;
     border-radius: 8px;
 }
-ul {
-    margin-left: 10%;
+#list {
+    position: absolute;
+    top: 33px;
+    left: 75px;
+    display: none;
+    width: 160px;
+    height: 100px;
+    background: #fff;
 }
-ul li {
-    margin-left: 10px;
-    padding: 5px;
+li {
     list-style: none;
 }
 button {
@@ -58,4 +58,8 @@ button {
 }
 .continue {
     margin-left: 30%;
+}
+p {
+    margin: 10px;
+    text-align: justify;
 }
