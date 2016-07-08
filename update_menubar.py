@@ -3,17 +3,17 @@ import weixin.basic
 token=weixin.basic.GetAccessToken()
 menubody={
     "button":[{
-           "name":u"我的收益",
+           "name":u"我的产品",
            "sub_button":[
            {
                "type":"view",
-               "name":u"我的产品",
+               "name":u"我的收益",
                "url":"http://news.wowfantasy.cn/wxauthstart"
             },
                {
                    "type": "view",
                    "name": u"我的提醒",
-                   "url": "http://news.wowfantasy.cn/wxauthstart"
+                   "url": "http://news.wowfantasy.cn/wxauthstart?state=remind"
                },
            ]
     },

@@ -34,6 +34,8 @@ web.config.debug = False
 path_list=[
     '/weixinserver',pages.weixinserver.WeiXin,
     '/host',pages.indexpage.Host,
+    '/remind',pages.indexpage.Remind,
+    '/addrecord',pages.indexpage.RegProduct,
     '/profitdetail',pages.indexpage.ProfitDetail,
     '/myselect',pages.indexpage.MySelect,
     "/product",pages.indexpage.ProductDetail,

@@ -30,18 +30,55 @@ class Host(object):
             one["profit"] = calcProfit(one,myproductls[one["cpdjbm"]])
             allprofit += one["profit"]
             dayremain=(one["cpyjzzrq"]-now).days
-            if dayremain<14:
+            """if dayremain<14:
                 if dayremain<0:
                     one["dayremain"]=0
                 else:
                     one["dayremain"]=dayremain
                 reminds.append(one)
-            else:
-                products.append(one)
+            else:"""
+            products.append(one)
 
         tpl=jinja2_env.get_template("index.html")
-        return tpl.render(allprofit=allprofit,products=products,reminds=reminds)
+        return tpl.render(allprofit=allprofit,products=products)
 
+class Remind(object):
+    def GET(self):
+        if not database.session.get("uid", False):
+            raise web.seeother('/wxauthstart')
+
+        param=web.input(days="14")
+        days=int(param.days)
+        userinfo = database.users.find_one({"_id": objectid.ObjectId(database.session.uid)}, {"_id": 0})
+        myproduct = []
+        myproductls = []
+        if "myproduct" in userinfo and userinfo["myproduct"]:
+            myproductls = userinfo["myproduct"]
+            del userinfo["myproduct"]
+            myproduct = [key for key in myproductls.iterkeys()]
+
+        allprofit = 0
+        reminds = []
+        now = datetime.datetime.now()
+        for one in database.lccp.find({"cpdjbm": {"$in": myproduct}}, {"_id": 0}).sort(
+                [("yjkhzgnsyl", -1), ("cpyjzzrq", 1)]):
+            one["profit"] = calcProfit(one, myproductls[one["cpdjbm"]])
+            allprofit += one["profit"]
+            dayremain = (one["cpyjzzrq"] - now).days
+            if dayremain<days:
+                if dayremain<0:
+                    one["dayremain"]=0
+                else:
+                    one["dayremain"]=dayremain
+                reminds.append(one)
+
+        tpl = jinja2_env.get_template("my-remind.html")
+        return tpl.render(allprofit=allprofit, reminds=reminds,days=days)
+
+class RegProduct(object):
+    def GET(self):
+        tpl = jinja2_env.get_template("addrecord.html")
+        return tpl.render()
 class Guide(object):
     def GET(self):
         params = web.input(step=1)

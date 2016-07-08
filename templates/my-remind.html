@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,
+    minimum-scale=1, maximum-scale=1,user-scalable=no">
+    <title>钱搁哪</title>
+    <script src="js/commom.js"></script>
+    <script src="http://cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
+    <link href="http://cdn.bootcss.com/meyer-reset/2.0/reset.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<a href="/myselect"><button>我的选择</button></a>
+    <a href="/addrecord" style="float: right"><button>产品补录</button></a>
+    <div class="tab-content" style="margin-top: 10px">
+
+        <div>
+            <ul class="my-remind">
+            <span>请选择您想要提醒的天数：</span>
+                <form>
+                    <select id="days">
+                        <option value="14" {% if days==14 %}selected="selected"{% endif %}>14天</option>
+                        <option value="7" {% if days==7 %}selected="selected"{% endif %}>7天</option>
+                        <option value="1" {% if days==1 %}selected="selected"{% endif %}>1天</option>
+                    </select>
+                </form>
+                {% for one in reminds %}
+                <li cpdjbm="{{ one.cpdjbm }}">
+                    <p><div></div>{{ one.profit }}<span>元</span>&nbsp;<span class="remind">还有<i class="day">{{ one.dayremain }}</i>天到期</span></p>
+                    <p>{{ one.cpms }}</p>
+                </li>
+                {% endfor %}
+            </ul>
+
+        </div>
+    </div>
+<script src="js/script.js"></script>
+<script>
+$("#days").on("change",function () {
+    window.location.href="/remind?days="+$(this).val()
+})
+</script>
+</body>
+</html>

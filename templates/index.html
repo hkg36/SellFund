@@ -26,12 +26,12 @@
 <div id="tab">
     <div class="tab-title">
         <ul>
-            <li class="select"><img src="img/shouyi.png" alt=""><p>我的收益</p></li>
-            <li>{% if reminds|length >0 %}<div></div>{% endif %}<img src="img/tixing.png" alt=""><p>我的提醒</p></li>
-            <li><img src="img/woyimai.png" alt=""><p>产品补录</p></li>
-        </ul>
+        <li class="select">
+                <span>我的收益</span>
+                <a href="/addrecord"><button>产品补录</button></a>
+        </li>
+            </ul>
     </div>
-
     <div class="tab-content">
         <div class="show">
             <ul>
@@ -43,7 +43,7 @@
                 {% endfor %}
             </ul>
         </div>
-        <div>
+        <!--div>
             <ul class="my-remind">
                 {% for one in reminds %}
                 <li cpdjbm="{{ one.cpdjbm }}">
@@ -59,13 +59,13 @@
             <label><span>登记编码</span><input type="text" class="cpdjbm"></label><br>
             <label><span>购买金额</span><input type="text" class="value"></label><br>
             <button class="buyrecord">继续录入</button><button class="buyrecord">完成录入</button>
-        </div>
+        </div-->
     </div>
 </div>
-<footer>
+<!--footer>
     <div><img src="img/profit-blue.png" alt="图片"><br>我的收益</div><div class="my-select">
     <a href='/myselect'><img src="img/select.png" alt="图片"><br>我的选择</a></div>
-</footer>
-<script src="js/script.js?jjk"></script>
+</footer-->
+<script src="js/script.js"></script>
 </body>
 </html>

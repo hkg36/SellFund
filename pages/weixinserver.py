@@ -95,6 +95,10 @@ class WeiXin(object):
         etree.SubElement(music,'HQMusicUrl').text=etree.CDATA('http://%s/static/music01.mp3'%HOSTNAME)
         return new_root
     def On_event_subscribe(self,doc):
+        new_root = self._buildReplyBase()
+        etree.SubElement(new_root, 'MsgType').text = etree.CDATA('text')
+        etree.SubElement(new_root, 'Content').text = etree.CDATA(u'你好，欢迎关注钱搁哪！')
+        return new_root
         token=weixin.basic.GetAccessToken()
         userdata=weixin.basic.GetUserInfo(token,self.from_user)
         """
@@ -113,25 +117,6 @@ class WeiXin(object):
                 scenceid=int(match.group('code'))
                 print(scenceid)
 
-        articles = []
-        articles.append([
-            u"想发财就跟我来",
-            u"想发财就跟我来",
-            "http://www.weiyangx.com/wp-content/uploads/2014/02/%E7%A4%BE%E4%BC%9A%E5%80%9F%E8%B4%B7-%E4%BC%97%E7%AD%B9%E5%92%8CP2P%E8%B4%B7%E6%AC%BE.jpg",
-            "http://www.baidu.com",
-        ])
-        datafile = open("templates/newprod.json")
-        productdata = json.load(datafile)
-        datafile.close()
-        for one in productdata:
-            articles.append([
-                one["cpms"],
-                one["fxjgms"],
-                "http://www.weiyangx.com/wp-content/uploads/2014/02/%E7%A4%BE%E4%BC%9A%E5%80%9F%E8%B4%B7-%E4%BC%97%E7%AD%B9%E5%92%8CP2P%E8%B4%B7%E6%AC%BE.jpg",
-                "http://news.wowfantasy.cn/host#productdetail?info=" + base64.b64encode(json.dumps(one)),
-                ])
-
-        return self._buildNews(articles)
     def On_event_unsubscribe(self):
         pass
     def _buildReplyBase(self):
