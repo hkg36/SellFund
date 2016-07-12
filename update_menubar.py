@@ -22,8 +22,8 @@ menubody={
             "sub_button": [
                 {
                     "type": "view",
-                    "name": u"我的银行",
-                    "url": "http://news.wowfantasy.cn/wxauthstart?state=mybank"
+                    "name": u"本地银行",
+                    "url": "http://news.wowfantasy.cn/wxauthstart?state=myselect"
                 },
                 {
                     "type": "view",
@@ -32,8 +32,8 @@ menubody={
                 },
                 {
                     "type": "view",
-                    "name": u"我的关注",
-                    "url": "http://news.wowfantasy.cn/wxauthstart?state=myattention"
+                    "name": u"外地银行",
+                    "url": "http://news.wowfantasy.cn/wxauthstart?state=myselect"
                 },
             ]
         },

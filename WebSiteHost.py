@@ -38,6 +38,7 @@ path_list=[
     '/addrecord',pages.indexpage.RegProduct,
     '/profitdetail',pages.indexpage.ProfitDetail,
     '/myselect',pages.indexpage.MySelect,
+    '/myselect2',pages.indexpage.MySelectOtherBank,
     "/product",pages.indexpage.ProductDetail,
     '/mybank',pages.indexpage.MyBank,
     "/myattention",pages.indexpage.MyAttention,

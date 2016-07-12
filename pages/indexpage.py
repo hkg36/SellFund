@@ -121,6 +121,8 @@ class ProfitDetail(object):
         return tpl.render(product=product,buystate=userinfo["myproduct"][params.cpdjbm],buytime=(now-userinfo["myproduct"][params.cpdjbm]["date"]).days)
 
 class MySelect(object):
+    def __init__(self):
+        self.tplname="select.html"
     def GET(self):
         params=web.input(search=None,order="-yjkhzgnsyl",page=0)
         findparam = {}
@@ -129,12 +131,8 @@ class MySelect(object):
             findparam={"$and":[{"mjjsrq": {"$gt": datetime.datetime.now()}},findparam]}
         else:
             findparam = {"mjjsrq": {"$gt": datetime.datetime.now()}}
+        self.BuildFindParam(findparam)
 
-        userinfo = database.users.find_one({"_id": objectid.ObjectId(database.session.uid)}, {"watchbanks": True})
-        if userinfo and "watchbanks" in userinfo:
-            selectedbank = userinfo["watchbanks"]
-            if selectedbank:
-                findparam["bank"]={"$in":selectedbank}
         alllist = database.lccp.find(findparam, {"_id": False})
         if params.order:
             if params.order[0] == "-":
@@ -142,8 +140,24 @@ class MySelect(object):
             else:
                 alllist = alllist.sort(params.order)
         alllist = alllist.skip(int(params.page) * 20).limit(20)
-        tpl = jinja2_env.get_template("select.html")
+        tpl = jinja2_env.get_template(self.tplname)
         return tpl.render(alllist=alllist,order=params.order)
+    def BuildFindParam(self,findparam):
+        userinfo = database.users.find_one({"_id": objectid.ObjectId(database.session.uid)}, {"watchbanks": True})
+        if userinfo and "watchbanks" in userinfo:
+            selectedbank = userinfo["watchbanks"]
+            if selectedbank:
+                findparam["bank"] = {"$in": selectedbank}
+class MySelectOtherBank(MySelect):
+    def __init__(self):
+        super(MySelectOtherBank,self).__init__()
+        self.tplname="waidiyinhang.html"
+    def BuildFindParam(self,findparam):
+        userinfo = database.users.find_one({"_id": objectid.ObjectId(database.session.uid)}, {"attentionbanks": True})
+        if userinfo and "attentionbanks" in userinfo:
+            selectedbank = userinfo["attentionbanks"]
+            if selectedbank:
+                findparam["bank"] = {"$in": selectedbank}
 class ProductDetail(object):
     def GET(self):
         praram=web.input(cpdjbm=None)

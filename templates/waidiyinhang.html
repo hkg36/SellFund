@@ -18,21 +18,17 @@
 <body>
 
 <div class="banner">
-    <a href="/mybank">
-    <div class="my-bank">
-        <img src="img/bank.png" alt="本地银行"><br>
-        <span>本地银行</span>
-    </div>
-        </a>
     <a href="/reserve">
     <div class="my-reserve">
         <img src="img/reserve.png" alt="我的预约"><br>
         <span>我的预约</span>
-    </div></a><!---div class="my-attention">
+    </div></a>
     <a href="/myattention">
-        <img src="img/attention.png" alt="我的关注"><br>
-        <span>我的关注</span>
-        </a-->
+        <div class="my-attention">
+        <img src="img/attention.png" alt="外地银行"><br>
+        <span>外地银行</span>
+            </div>
+        </a>
     </div>
 <input type="text" name="search" placeholder="搜索" id="searchtext">
 
@@ -75,7 +71,7 @@
     function gosearch() {
         var search=$("#searchtext").val()
         var order=$(".tab-title li.select").attr("order")
-        window.location.href="/myselect?search="+search+"&order="+order
+        window.location.href="/myselect2?search="+search+"&order="+order
     }
     $("#searchtext").keyup(function(event){
         if(event.keyCode == 13){

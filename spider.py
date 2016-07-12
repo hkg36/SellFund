@@ -84,7 +84,7 @@ for one in datalist:
         one["yjkhzdnsyl"]=0
     one["bank"]=re.sub(u"(股份|有限公司|（中国）)",u"",one["fxjgms"])
 
-    updateres=lccp.update_one({"cpdjbm":cpdjbm},{"$set":one,"$addToSet":{"cpztms":cpztms}},upsert=True)
+    updateres=lccp.update_one({"cpdjbm":cpdjbm},{"$set":one},upsert=True)
     if updateres.matched_count==0:
         new_products.append(updateres.upserted_id)
 
