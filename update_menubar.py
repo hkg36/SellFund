@@ -27,13 +27,13 @@ menubody={
                 },
                 {
                     "type": "view",
-                    "name": u"我的预约",
-                    "url": "http://news.wowfantasy.cn/wxauthstart?state=reserve"
+                    "name": u"外地银行",
+                    "url": "http://news.wowfantasy.cn/wxauthstart?state=myselect2"
                 },
                 {
                     "type": "view",
-                    "name": u"外地银行",
-                    "url": "http://news.wowfantasy.cn/wxauthstart?state=myselect"
+                    "name": u"我的预约",
+                    "url": "http://news.wowfantasy.cn/wxauthstart?state=reserve"
                 },
             ]
         },
@@ -63,7 +63,7 @@ menubody={
                 {
                     "type": "view",
                     "name": u"使用说明",
-                    "url": "http://1.qiangena.applinzi.com/dakafenxiang/share.html"
+                    "url": "http://news.wowfantasy.cn/static/guide.html"
                 },
             ]
         }
