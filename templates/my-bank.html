@@ -22,12 +22,12 @@
 <h4>本地银行</h4>
 
     <ul class="banklist">
-        <li><input type="checkbox" value="中国银行"><img src="img/zhongguo.png" alt="">中国银行(国有银行)</li>
-        <li><input type="checkbox" value="中国农业银行"><img src="img/nongye.png" alt="">中国农业银行(国有银行)</li>
-        <li><input type="checkbox" value="中国工商银行"><img src="img/gongshang.png" alt="">中国工商银行(国有银行)</li>
-        <li><input type="checkbox" value="中国建设银行"><img src="img/jianshe.png" alt="">中国建设银行(国有银行)</li>
-        <li><input type="checkbox" value="交通银行"><img src="img/jiaotong.png" alt="">交通银行(国有银行)</li>
-        <li><input type="checkbox" value="中国邮政储蓄银行"><img src="img/youzheng.png" alt="">中国邮政储蓄银行(国有银行)</li>
+        <li><input type="checkbox" value="中国银行"><img src="img/zhongguo.png" alt="">中国银行(国有大行)</li>
+        <li><input type="checkbox" value="中国农业银行"><img src="img/nongye.png" alt="">中国农业银行(国有大行)</li>
+        <li><input type="checkbox" value="中国工商银行"><img src="img/gongshang.png" alt="">中国工商银行(国有大行)</li>
+        <li><input type="checkbox" value="中国建设银行"><img src="img/jianshe.png" alt="">中国建设银行(国有大行)</li>
+        <li><input type="checkbox" value="交通银行"><img src="img/jiaotong.png" alt="">交通银行(国有大行)</li>
+        <li><input type="checkbox" value="中国邮政储蓄银行"><img src="img/youzheng.png" alt="">中国邮政储蓄银行(国有大行)</li>
         <li><input type="checkbox" value="招商银行"><img src="img/zhaoshang.png" alt="">招商银行(股份制银行)</li>
         <li><input type="checkbox" value="中信银行"><img src="img/zhongxin.png" alt="">中信银行(股份制银行)</li>
         <li><input type="checkbox" value="中国光大银行"><img src="img/guangda.png" alt="">中国光大银行(股份制银行)</li>
@@ -37,7 +37,9 @@
         <li><input type="checkbox" value="华夏银行"><img src="img/huaxia.png" alt="">华夏银行(股份制银行)</li>
         <li><input type="checkbox" value="兴业银行"><img src="img/xingye.png" alt="">兴业银行(股份制银行)</li>
         <li><input type="checkbox" value="浙商银行"><img src="img/zheshang.png" alt="">浙商银行(股份制银行)</li>
-        <li><input type="checkbox" value="平安银行"><img src="img/pingan.png" alt="">平安银行</li>
+        <li><input type="checkbox" value="平安银行"><img src="img/pingan.png" alt="">平安银行(股份制银行)</li>
+        <li><input type="checkbox" value="渤海银行"><img src="img/bohai.png" alt="">渤海银行(股份制银行)</li>
+        <li><input type="checkbox" value="恒丰银行"><img src="img/hengfeng.png" alt="">恒丰银行(股份制银行)</li>
         <li><input type="checkbox" value="江苏银行"><img src="img/jiangsu.png" alt="">江苏银行</li>
         <li><input type="checkbox" value="南京银行"><img src="img/nanjing.png" alt="">南京银行</li>
         <li><input type="checkbox" value="北京银行"><img src="img/beijing.png" alt="">北京银行</li>
@@ -49,17 +51,11 @@
         <li><input type="checkbox" value="恒生银行"><img src="img/hengsheng.png" alt="">恒生银行</li>
         <li><input type="checkbox" value="大连银行"><img src="img/dalian.png" alt="">大连银行</li>
         <li><input type="checkbox" value="厦门国际银行"><img src="img/xiamenguoji.png" alt="">厦门国际银行</li>
-        <li><input type="checkbox" value="上海农村商业银行"><img src="img/shanghainongcun.png" alt="">上海农村商业银行</li>
+        <li><input type="checkbox" value="北京农村商业银行"><img src="img/shanghainongcun.png" alt="">北京农村商业银行</li>
         <li><input type="checkbox" value="星展银行"><img src="img/xingzhan.png" alt="">星展银行</li>
         <li><input type="checkbox" value="韩亚银行"><img src="img/hanya.png" alt="">韩亚银行</li>
     </ul>
-<!--h4>外地银行</h4>
-<ul class="banklist">
-        <li><input type="checkbox" value="渤海银行"><img src="img/bohai.png" alt="">渤海银行</li>
-        <li><input type="checkbox" value="华夏银行"><img src="img/huaxia.png" alt="">华夏银行</li>
-        <li><input type="checkbox" value="恒丰银行"><img src="img/hengfeng.png" alt="">恒丰银行</li>
-        <li><input type="checkbox" value="渣打银行"><img src="img/zhada.png" alt="">渣打银行</li>
-    </ul-->
+
 <div class="save">
     <button id="savebn">保存</button>
 </div>
@@ -78,7 +74,7 @@
         })
         $.post("/mybank",{banks:JSON.stringify(checked)},function () {
             alert('保存成功')
-            history.back()
+            window.location.href = "/myselect";
         })
     })
 </script>

@@ -21,9 +21,9 @@
 </div>
 <h4>外地银行</h4>
 <ul class="banklist">
-    <li><input type="checkbox" value="渤海银行"><img src="img/bohai.png" alt="">渤海银行</li>
-    <li><input type="checkbox" value="恒丰银行"><img src="img/hengfeng.png" alt="">恒丰银行</li>
     <li><input type="checkbox" value="渣打银行"><img src="img/zhada.png" alt="">渣打银行</li>
+        <li><input type="checkbox" value="苏州银行"><img src="img/zhada.png" alt="">苏州银行</li>
+        <li><input type="checkbox" value="华润银行"><img src="img/zhada.png" alt="">华润银行</li>
 </ul>
 
 <div class="save">
@@ -44,7 +44,7 @@
         })
         $.post("/myattention",{banks:JSON.stringify(checked)},function () {
             alert('保存成功')
-            history.back()
+            window.location.href = "/myselect2";
         })
     })
 </script>

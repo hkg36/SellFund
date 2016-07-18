@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="IE=edge chrome=1">
     <meta name="renderer" content="webkit">
-    <meta http-equiv="Cache-Control" content="no-siteapp" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="format-detection" content="telephone=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="format-detection" content="telephone=no"/>
     <meta name="viewport" content="width=device-width, initial-scale=1,
     minimum-scale=1, maximum-scale=1,user-scalable=no">
     <title>钱搁哪</title>
@@ -17,35 +17,44 @@
 </head>
 <body>
 
-<a href="/myselect"><button>我的选择</button></a>
-    <a href="/addrecord" style="float: right"><button>产品补录</button></a>
-    <div class="tab-content" style="margin-top: 10px">
+<a href="/myselect">
+    <button>我的选择</button>
+</a>
+<a href="/addrecord" style="float: right">
+    <button>产品补录</button>
+</a>
+<div class="tab-content" style="margin-top: 10px">
 
-        <div>
-            <ul class="my-remind">
+    <div>
+        <ul class="my-remind">
             <span>请选择您想要提醒的天数：</span>
-                <form>
-                    <select id="days">
-                        <option value="14" {% if days==14 %}selected="selected"{% endif %}>14天</option>
-                        <option value="7" {% if days==7 %}selected="selected"{% endif %}>7天</option>
-                        <option value="1" {% if days==1 %}selected="selected"{% endif %}>1天</option>
-                    </select>
-                </form>
-                {% for one in reminds %}
+            <form>
+                <select id="days">
+                    <option value="14" {% if days==14 %}selected="selected"{% endif %}>14天</option>
+                    <option value="11" {% if days==11 %}selected="selected"{% endif %}>11天</option>
+                    <option value="9" {% if days==9 %}selected="selected"{% endif %}>9天</option>
+                    <option value="7" {% if days==7 %}selected="selected"{% endif %}>7天</option>
+                    <option value="5" {% if days==5 %}selected="selected"{% endif %}>5天</option>
+                    <option value="3" {% if days==3 %}selected="selected"{% endif %}>3天</option>
+                </select>
+            </form>
+            {% for one in reminds %}
                 <li cpdjbm="{{ one.cpdjbm }}">
-                    <p><div></div>{{ one.profit }}<span>元</span>&nbsp;<span class="remind">还有<i class="day">{{ one.dayremain }}</i>天到期</span></p>
+                    <p>
+                    <div></div>
+                    {{ one.profit }}<span>元</span>&nbsp;<span class="remind">还有<i class="day">{{ one.dayremain }}</i>天到期</span></p>
                     <p>{{ one.cpms }}</p>
                 </li>
-                {% endfor %}
-            </ul>
+            {% endfor %}
+        </ul>
 
-        </div>
     </div>
+</div>
 <script src="js/script.js"></script>
 <script>
-$("#days").on("change",function () {
-    window.location.href="/remind?days="+$(this).val()
-})
+    $("#days").on("change", function () {
+        window.location.href = "/remind?days=" + $(this).val()
+    })
 </script>
 </body>
 </html>
