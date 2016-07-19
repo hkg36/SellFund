@@ -97,7 +97,7 @@ class WeiXin(object):
     def On_event_subscribe(self,doc):
         new_root = self._buildReplyBase()
         etree.SubElement(new_root, 'MsgType').text = etree.CDATA('text')
-        etree.SubElement(new_root, 'Content').text = etree.CDATA(u'你好，欢迎关注钱搁哪！')
+        etree.SubElement(new_root, 'Content').text = etree.CDATA(u'你好，欢迎关注钱搁哪！请先阅读我的社区中的使用说明。')
         return new_root
         token=weixin.basic.GetAccessToken()
         userdata=weixin.basic.GetUserInfo(token,self.from_user)
