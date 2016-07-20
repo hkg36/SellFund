@@ -42,7 +42,8 @@
                 <li cpdjbm="{{ one.cpdjbm }}">
                     <p>
                     <div></div>
-                    {{ one.profit }}<span>元</span>&nbsp;<span class="remind">还有<i class="day">{{ one.dayremain }}</i>天到期</span></p>
+                    {{ one.profit }}<span>元</span>&nbsp;<span class="remind">
+                    {% if one.dayremain>0 %}还有<i class="day">{{ one.dayremain }}</i>天到期{% else %}已到期{% endif %}</span></p>
                     <p>{{ one.cpms }}</p>
                 </li>
             {% endfor %}
