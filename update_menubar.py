@@ -63,7 +63,7 @@ menubody={
                 {
                     "type": "view",
                     "name": u"使用说明",
-                    "url": "http://news.wowfantasy.cn/static/guide.html"
+                    "url": "http://jiangwenjing.github.io/qiangena/guide.html"
                 },
             ]
         }

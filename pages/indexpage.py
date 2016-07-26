@@ -47,8 +47,11 @@ class Remind(object):
         if not database.session.get("uid", False):
             raise web.seeother('/wxauthstart')
 
-        param=web.input(days="14")
-        days=int(param.days)
+        rmday=web.cookies().get('rmday')
+        if rmday is None:
+            days=7
+        else:
+            days=int(rmday)
         userinfo = database.users.find_one({"_id": objectid.ObjectId(database.session.uid)}, {"_id": 0})
         myproduct = []
         myproductls = []

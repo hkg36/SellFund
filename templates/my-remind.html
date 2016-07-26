@@ -12,6 +12,7 @@
     <title>钱搁哪</title>
     <script src="js/commom.js"></script>
     <script src="http://cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <link href="http://cdn.bootcss.com/meyer-reset/2.0/reset.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -54,7 +55,8 @@
 <script src="js/script.js"></script>
 <script>
     $("#days").on("change", function () {
-        window.location.href = "/remind?days=" + $(this).val()
+        $.cookie("rmday",$(this).val())
+        window.location.reload(true)
     })
 </script>
 </body>
