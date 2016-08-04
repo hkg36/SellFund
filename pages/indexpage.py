@@ -23,24 +23,20 @@ class Host(object):
 
         allprofit=0
         products = []
-        reminds=[]
+        finish = []
         now=datetime.datetime.now()
         for one in database.lccp.find({"cpdjbm": {"$in": myproduct}}, {"_id": 0}).sort(
                 [("yjkhzgnsyl", -1), ("cpyjzzrq", 1)]):
             one["profit"] = calcProfit(one,myproductls[one["cpdjbm"]])
             allprofit += one["profit"]
             dayremain=(one["cpyjzzrq"]-now).days
-            """if dayremain<14:
-                if dayremain<0:
-                    one["dayremain"]=0
-                else:
-                    one["dayremain"]=dayremain
-                reminds.append(one)
-            else:"""
-            products.append(one)
+            if dayremain<=0:
+                finish.append(one)
+            else:
+                products.append(one)
 
         tpl=jinja2_env.get_template("index.html")
-        return tpl.render(allprofit=allprofit,products=products)
+        return tpl.render(allprofit=allprofit,products=products,finish=finish)
 
 class Remind(object):
     def GET(self):
@@ -62,6 +58,7 @@ class Remind(object):
 
         allprofit = 0
         reminds = []
+        finish=[]
         now = datetime.datetime.now()
         for one in database.lccp.find({"cpdjbm": {"$in": myproduct}}, {"_id": 0}).sort(
                 [("yjkhzgnsyl", -1), ("cpyjzzrq", 1)]):
@@ -70,13 +67,13 @@ class Remind(object):
             dayremain = (one["cpyjzzrq"] - now).days
             if dayremain<days:
                 if dayremain<0:
-                    one["dayremain"]=0
+                    finish.append(one)
                 else:
                     one["dayremain"]=dayremain
-                reminds.append(one)
+                    reminds.append(one)
 
         tpl = jinja2_env.get_template("my-remind.html")
-        return tpl.render(allprofit=allprofit, reminds=reminds,days=days)
+        return tpl.render(allprofit=allprofit, reminds=reminds,days=days,finish=finish)
 
 class RegProduct(object):
     def GET(self):
@@ -121,7 +118,16 @@ class ProfitDetail(object):
         else:
             product["dayremain"] = dayremain
         tpl = jinja2_env.get_template("profit-detail.html")
-        return tpl.render(product=product,buystate=userinfo["myproduct"][params.cpdjbm],buytime=(now-userinfo["myproduct"][params.cpdjbm]["date"]).days)
+        if "date" in userinfo["myproduct"][params.cpdjbm]:
+            buytime=(now-userinfo["myproduct"][params.cpdjbm]["date"]).days
+        else:
+            buytime=0
+        return tpl.render(product=product,buystate=userinfo["myproduct"][params.cpdjbm],buytime=buytime)
+    def POST(self):
+        params = web.input()
+        if params.act=="del":
+            database.users.update_one({"_id": objectid.ObjectId(database.session.uid)},
+                                      {"$unset":{"myproduct.%s" % params.cpdjbm: 1}})
 
 class MySelect(object):
     def __init__(self):
@@ -244,3 +250,15 @@ class Recommend(object):
         products=database.lccp.find(searchparam, {"_id": 0}).sort("yjkhzgnsyl", -1).limit(30)
         tpl = jinja2_env.get_template("recommend.html")
         return tpl.render(products=products)
+
+class Revise(object):
+    def GET(self):
+        params = web.input()
+        cpdjbm=params.cpdjbm
+        tpl = jinja2_env.get_template("revise.html")
+        return tpl.render(cpdjbm=cpdjbm)
+    def POST(self):
+        param = web.input()
+        database.users.update({"_id": objectid.ObjectId(database.session.uid)},
+                              {"$set": {"myproduct." + param.cpdjbm: {"value": float(param.value),
+                                                                      "profit":float(param.profit)}}})

@@ -8,3 +8,4 @@ fund = client.test
 lccp=fund.lccp
 users=fund.users
 news=fund.news
+bankbranch=fund.bankbranch

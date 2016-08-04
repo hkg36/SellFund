@@ -11,6 +11,7 @@
     minimum-scale=1, maximum-scale=1,user-scalable=no">
     <title>钱搁哪</title>
     <script src="js/commom.js"></script>
+    <script src="http://cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
     <link href="http://cdn.bootcss.com/meyer-reset/2.0/reset.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/profit-detail.css">
 </head>
@@ -28,6 +29,7 @@
         <li>购买天数：<span>{{ buytime }}天</span></li>
         <li>到期时间：<span>{{ product.dayremain }}天后到期</span></li>
     </ul>
+    <button id="del" cpdjbm="{{ product.cpdjbm }}">删除</button>
     <a href="/recommend?after={{ product.cpyjzzrq.strftime("%Y-%m-%d")  }}"><button>预约下个高收益产品</button></a>
 </div>
 <div class="product-detail">
@@ -42,6 +44,14 @@
         <li>产品结束日期：<span>{{ product.cpyjzzrq.strftime("%Y/%m/%d") }}</span></li>
     </ul>
 </div>
-
+<script>
+    $("#del").on("click",function () {
+        if(confirm("您是否确认删除该产品？ ")==false)
+            return;
+        $.post("",{act:"del",cpdjbm:$(this).attr("cpdjbm")},function () {
+            window.location.href="/host"
+        })
+    })
+</script>
 </body>
 </html>

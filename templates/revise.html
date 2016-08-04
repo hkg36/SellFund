@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,
+    minimum-scale=1, maximum-scale=1,user-scalable=no">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/welcome2.css">
+    <script src="http://cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
+    <style>
+        .revise {
+            margin-left: 45%;
+        }
+    </style>
+</head>
+<body>
+<h3>请录入您需要修改的产品信息：</h3>
+<ul>
+    <input type="hidden" id="cpdjbm" value="{{ cpdjbm }}">
+    <li><label><span>已购买(元)</span><input type="text" id="value"></label></li>
+    <li><label><span>已收益(元)</span><input type="text" id="profit"></label></li>
+</ul>
+<button class="revise" id="submit">确认</button>
+<script>
+    $("#submit").on('click',function () {
+        var value=$("#value").val()
+        var profit=$("#profit").val()
+        var cpdjbm=$("#cpdjbm").val()
+        $.post("",{cpdjbm:cpdjbm,value:value,profit:profit},function () {
+            window.location.href="/host"
+        })
+    })
+</script>
+</body>
+</html>

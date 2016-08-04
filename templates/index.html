@@ -41,6 +41,15 @@
                     <p>{{ one.cpms }}</p>
                 </li>
                 {% endfor %}
+                <p>已到期产品</p>
+                {% for one in finish %}
+                    <li cpdjbm="{{ one.cpdjbm }}">
+                        <p>
+                        {{ one.profit }}<span>元</span></p>
+                        <a class="change"><button >修改</button></a>
+                        <p>{{ one.cpms }}</p>
+                    </li>
+                {% endfor %}
             </ul>
         </div>
     </div>

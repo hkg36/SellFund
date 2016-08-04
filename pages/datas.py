@@ -9,6 +9,8 @@ from bson import json_util,objectid
 
 def calcProfit(product,buy_value):
     now=datetime.datetime.now();
+    if "profit" in buy_value:
+        return buy_value["profit"]
     buydate=buy_value["date"]
     buyvalue=buy_value["value"]
     if buydate>product["cpqsrq"]:
