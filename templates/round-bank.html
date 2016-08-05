@@ -19,11 +19,13 @@
     <a href="javascript:history.back()">&lt;返回</a>
     <span>附近网点</span>
 </div>
-<h4>中国民生银行</h4>
+<h4>{{ bank }}</h4>
+{% for one in list %}
 <ul>
-    <li>地址 <span>青羊区一环路西一段166号附1-4号</span></li>
-    <li>理财经理 <span>王经理</span></li>
-    <li>电话 <span>2887735815</span></li>
+    <li>门店 <p>{{ one.hall }}</p></li>
+    <li>地址 <p>{{ one.addr }}</p></li>
+    <li>电话 <span>{{ one.phone }}</span></li>
 </ul>
+{% endfor %}
 </body>
 </html>

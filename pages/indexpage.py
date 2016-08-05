@@ -236,8 +236,10 @@ class RegBuy(object):
 
 class RoundBank(object):
     def GET(self):
+        params = web.input()
+        list=database.bankbranch.find({"bank":params.bank})
         tpl = jinja2_env.get_template("round-bank.html")
-        return tpl.render()
+        return tpl.render(bank=params.bank,list=list)
 
 class Recommend(object):
     def GET(self):
