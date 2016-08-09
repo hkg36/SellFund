@@ -27,7 +27,12 @@ ul li {
     border-bottom: 1px solid #eee;
     margin-left: 10px;
 }
-ul li span {
-    float: right;
-    margin-right: 10px;
+ul {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #000;
+}
+
+p {
+    margin-left: 10px;
+    border-bottom: 1px solid #eee;
 }

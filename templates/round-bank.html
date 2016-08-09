@@ -22,9 +22,9 @@
 <h4>{{ bank }}</h4>
 {% for one in list %}
 <ul>
-    <li>门店 <p>{{ one.hall }}</p></li>
-    <li>地址 <p>{{ one.addr }}</p></li>
-    <li>电话 <span>{{ one.phone }}</span></li>
+    <p>门店 : <span>{{ one.hall }}</span></p>
+    <p>地址 : <span>{{ one.addr }}</span></p>
+    <li>电话 : <span>{{ one.phone }}</span></li>
 </ul>
 {% endfor %}
 </body>

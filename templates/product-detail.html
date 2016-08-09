@@ -11,6 +11,7 @@
     minimum-scale=1, maximum-scale=1,user-scalable=no">
     <title>钱搁哪</title>
     <script src="js/commom.js"></script>
+    <script src="http://cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
     <link href="http://cdn.bootcss.com/meyer-reset/2.0/reset.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/product-detail.css">
 </head>
@@ -20,6 +21,7 @@
     <span>产品详情</span>
 </div>
 <h3>{{ product.cpms }}</h3>
+<input type="hidden" id="cpdjbm" value="{{ product.cpdjbm }}">
 <ul class="product">
     <li>登记编码：<span>{{ product.cpdjbm }}</span></li>
         <li>实际天数：<span>{{ product.cpqx }}天</span></li>
@@ -33,6 +35,15 @@
 <div class="bank">
     <a href="/roundbank?bank={{ product.bank }}"><span>点击查看该银行附近网点<img src="img/more.png"></span></a>
 </div>
+<button id="reserve">点击预约产品</button>
+<script>
+    $("#reserve").on("click",function () {
+        var cpdjbm=$("#cpdjbm").val()
+        $.post("/reserve",{cmd:"add",cpdjbm:cpdjbm},function () {
+            alert('您已预约成功！可前往“我的预约”查看所有预约产品')
+        })
+    })
 
+</script>
 </body>
 </html>

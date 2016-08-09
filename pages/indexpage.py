@@ -148,7 +148,7 @@ class MySelect(object):
                 alllist = alllist.sort(((params.order[1:], -1),))
             else:
                 alllist = alllist.sort(params.order)
-        alllist = alllist.skip(int(params.page) * 20).limit(20)
+        alllist = alllist.skip(int(params.page) * 200).limit(200)
         tpl = jinja2_env.get_template(self.tplname)
         return tpl.render(alllist=alllist,order=params.order)
     def BuildFindParam(self,findparam):

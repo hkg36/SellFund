@@ -39,3 +39,11 @@ img {
     color: #0078fa;
     font-weight: 900;
 }
+button {
+    width: 80%;
+    height: 30px;
+    margin-left: 10%;
+    background: #0078fa;
+    color: #fff;
+    border: none;
+}
