@@ -35,7 +35,9 @@
 <div class="bank">
     <a href="/roundbank?bank={{ product.bank }}"><span>点击查看该银行附近网点<img src="img/more.png"></span></a>
 </div>
+{% if hidereserve==0 %}
 <button id="reserve">点击预约产品</button>
+{% endif %}
 <script>
     $("#reserve").on("click",function () {
         var cpdjbm=$("#cpdjbm").val()

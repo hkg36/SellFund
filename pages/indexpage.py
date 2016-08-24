@@ -43,11 +43,9 @@ class Remind(object):
         if not database.session.get("uid", False):
             raise web.seeother('/wxauthstart')
 
-        rmday=web.cookies().get('rmday')
-        if rmday is None:
-            days=7
-        else:
-            days=int(rmday)
+        params = web.input()
+        if params.has_key("rmday"):
+            database.users.update_one({"_id": objectid.ObjectId(database.session.uid)},{"$set":{'rmday':int(params.rmday)}})
         userinfo = database.users.find_one({"_id": objectid.ObjectId(database.session.uid)}, {"_id": 0})
         myproduct = []
         myproductls = []
@@ -55,6 +53,11 @@ class Remind(object):
             myproductls = userinfo["myproduct"]
             del userinfo["myproduct"]
             myproduct = [key for key in myproductls.iterkeys()]
+
+        if 'rmday' in userinfo:
+            days=userinfo['rmday']
+        else:
+            days=7
 
         allprofit = 0
         reminds = []
@@ -169,10 +172,10 @@ class MySelectOtherBank(MySelect):
                 findparam["bank"] = {"$in": selectedbank}
 class ProductDetail(object):
     def GET(self):
-        praram=web.input(cpdjbm=None)
-        product=database.lccp.find_one({"cpdjbm": praram.cpdjbm}, {"_id": 0})
+        param=web.input(hidereserve=0)
+        product=database.lccp.find_one({"cpdjbm": param.cpdjbm}, {"_id": 0})
         tpl = jinja2_env.get_template("product-detail.html")
-        return tpl.render(product=product)
+        return tpl.render(product=product,hidereserve=int(param.hidereserve))
 
 class MyBank(object):
     def GET(self):
@@ -237,9 +240,9 @@ class RegBuy(object):
 class RoundBank(object):
     def GET(self):
         params = web.input()
-        list=database.bankbranch.find({"bank":params.bank})
+        #list=database.bankbranch.find({"bank":params.bank})
         tpl = jinja2_env.get_template("round-bank.html")
-        return tpl.render(bank=params.bank,list=list)
+        return tpl.render(bank=params.bank)#,list=list)
 
 class Recommend(object):
     def GET(self):

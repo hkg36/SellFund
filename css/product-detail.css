@@ -43,6 +43,8 @@ button {
     width: 80%;
     height: 30px;
     margin-left: 10%;
+    margin-top: 20px;
+    margin-bottom: 20px;
     background: #0078fa;
     color: #fff;
     border: none;

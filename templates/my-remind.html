@@ -55,8 +55,7 @@
 <script src="js/script.js"></script>
 <script>
     $("#days").on("change", function () {
-        $.cookie("rmday",$(this).val())
-        window.location.reload(true)
+        window.location.href="/remind?rmday="+$(this).val()
     })
 </script>
 </body>

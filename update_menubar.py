@@ -27,6 +27,16 @@ menubody={
                 },
                 {
                     "type": "view",
+                    "name": u"专享/循环",
+                    "url": "http://jiangwenjing.github.io/qiangena/jijinzhuanxiang.html"
+                },
+                {
+                    "type": "view",
+                    "name": u"基金产品",
+                    "url": "http://jiangwenjing.github.io/qiangena/jijinchanpin.html"
+                },
+                {
+                    "type": "view",
                     "name": u"外地银行",
                     "url": "http://news.wowfantasy.cn/wxauthstart?state=myselect2"
                 },
